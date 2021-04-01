@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Array;
 import java.util.*;
 import java.util.Collections.*;
+import java.util.stream.Collectors;
 
 public class ValuesTable {
 
@@ -26,28 +27,12 @@ public class ValuesTable {
     }
 
     private static String checkIfVariableIsDeclared(String variable){
-        Iterator it = values.entrySet().iterator();
 
-        Collection<String> test = values.values();
-        List<String> list= new ArrayList<String>();
-        for (int i= values.size()-1; i>= 0; i--){
-
-            String val = values.get(i);
-            list.add(val);
-            System.out.println("/");
-            System.out.println(val);
-        }
-        //test= Collections.reverse(list);
-        System.out.println(list);
-
-
-        /*while(it.hasNext()){
-            Map.Entry pair = (Map.Entry) it.next();
-            System.out.println(variable.replace("$", ""));
-            if(pair.getValue().toString().equals(variable.replace("$", ""))){
-                return pair.getKey().toString();
+        for (Map.Entry<String, String> entry : values.entrySet()) {
+            if (entry.getValue().equals(variable.replace("$", ""))) {
+                return entry.getKey();
             }
-        }*/
+        }
         return null;
     }
 

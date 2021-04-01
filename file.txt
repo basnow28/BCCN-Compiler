@@ -1,13 +1,13 @@
 ﻿program factorial ;
-function fact ( int n ) : int {
+function fact ( int x ) : int {
         int result = 1 ;
-        if [ $n > 1 ] {
-                while [ $n > 1 ] {
-                        $result = $result * $n ;
-                        $n = $n - 1 ;
+        if [ $x > 1 ] {
+                while [ $x > 1 ] {
+                        $result = $result * $x ;
+                        $x = $x - 1 ;
                 }
         }
-        ifelse [ $n < 0 ] {
+        ifelse [ $x < 0 ] {
                 $result = -1 ;
         }
         return $result ;
