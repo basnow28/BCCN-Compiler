@@ -28,25 +28,26 @@ public class ValuesTable {
     private static String checkIfVariableIsDeclared(String variable){
         Iterator it = values.entrySet().iterator();
 
-        /*Collection<String> test = values.values();
+        Collection<String> test = values.values();
         List<String> list= new ArrayList<String>();
-
         for (int i= values.size()-1; i>= 0; i--){
-            list.add(values.get(i));
+
+            String val = values.get(i);
+            list.add(val);
             System.out.println("/");
-            System.out.println(values.values().toString());
+            System.out.println(val);
         }
         //test= Collections.reverse(list);
         System.out.println(list);
-        */
 
-        while(it.hasNext()){
+
+        /*while(it.hasNext()){
             Map.Entry pair = (Map.Entry) it.next();
             System.out.println(variable.replace("$", ""));
             if(pair.getValue().toString().equals(variable.replace("$", ""))){
                 return pair.getKey().toString();
             }
-        }
+        }*/
         return null;
     }
 
