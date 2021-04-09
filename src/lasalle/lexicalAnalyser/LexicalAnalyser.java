@@ -2,13 +2,13 @@ package lasalle.lexicalAnalyser;
 
 import lasalle.tables.KeywordTable;
 import lasalle.tables.OperatorTable;
-import lasalle.tables.ValuesTable;
+import lasalle.tables.IdentifierTable;
+import lasalle.tables.IntegerTable;
+import lasalle.tables.CharTable;
+import lasalle.tables.FloatTable;
+import lasalle.tables.BooleanTable;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class LexicalAnalyser {
 
@@ -33,7 +33,33 @@ public class LexicalAnalyser {
         if ((  token = OperatorTable.identifyOperator(word)) != null){
             return token;
         }
-        String identifier = ValuesTable.addNewValue(word);
+
+        if (word.matches("^'[A-Z a-z]{1}'")){
+            System.out.println("CHAR for "+
+                    word);
+            String caracter = CharTable.addNewChar(word);
+            return caracter;
+        }
+
+        if (word.matches("[-+]?[0-9]*\\.{1}[0-9]*") ){
+            System.out.println("FLOAT for "+ word);
+            String floatt = FloatTable.addNewFloat(word);
+            return floatt;
+        }
+
+        if (word.matches("[-+]?[0-9]") ){
+            System.out.println("INT for "+ word);
+            String integer = IntegerTable.addNewInteger(word);
+            return integer;
+        }
+
+        if (word.matches("^(True|False|TRUE|FALSE|true|false)$") ){
+            System.out.println("BOOLEAN for "+ word);
+            String bool = BooleanTable.addNewBoolean(word);
+            return bool;
+        }
+
+        String identifier = IdentifierTable.addNewIdentifier(word);
         return identifier;
     }
 }

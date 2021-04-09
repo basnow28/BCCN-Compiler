@@ -8,7 +8,7 @@ function fact ( int x ) : int {
                 }
         }
         ifelse [ $x < 0 ] {
-                $result = -1 ;
+                $result = - 1 ;
         }
         return $result ;
 }
@@ -16,5 +16,8 @@ function fact ( int x ) : int {
 start
 {
         int n = 5 ;
+        char s = 's' ;
+        float flo = 1.555 ;
+        boolean = true ;
         fact ( $n ) ;
 } end

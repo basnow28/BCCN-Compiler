@@ -1,25 +1,21 @@
 package lasalle.tables;
 
-import java.nio.charset.StandardCharsets;
-import java.sql.Array;
 import java.util.*;
-import java.util.Collections.*;
-import java.util.stream.Collectors;
 
-public class ValuesTable {
+public class IdentifierTable {
 
-    private static Map<String, String> values = new LinkedHashMap<String, String>();
+    private static Map<String, String> indentifiers = new LinkedHashMap<String, String>();
 
     public static Map<String, String> getValues() {
-        return values;
+        return indentifiers;
     }
 
-    public static void setValues(Map<String, String> values) {
-        ValuesTable.values = values;
+    public static void setIdentifer(Map<String, String> values) {
+        IdentifierTable.indentifiers = indentifiers;
     }
 
     private static int getValuesSize(){
-        return values.size() + 1;
+        return indentifiers.size() + 1;
     }
 
     public static String getNewIdentifier(){
@@ -28,7 +24,7 @@ public class ValuesTable {
 
     private static String checkIfVariableIsDeclared(String variable){
 
-        for (Map.Entry<String, String> entry : values.entrySet()) {
+        for (Map.Entry<String, String> entry : indentifiers.entrySet()) {
             if (entry.getValue().equals(variable.replace("$", ""))) {
                 return entry.getKey();
             }
@@ -36,7 +32,7 @@ public class ValuesTable {
         return null;
     }
 
-    public static String addNewValue(String value){
+    public static String addNewIdentifier(String value){
         String key;
         if(value.contains("$")){
             key = checkIfVariableIsDeclared(value);
@@ -46,7 +42,7 @@ public class ValuesTable {
         }
 
         key = getNewIdentifier();
-        values.put(key, value);
+        indentifiers.put(key, value);
         return key;
     }
 }
