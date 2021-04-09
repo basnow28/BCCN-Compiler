@@ -53,7 +53,7 @@ public class LexicalAnalyser {
             return integer;
         }
 
-        if (word.matches("^(True|False|TRUE|FALSE|true|false)$") ){
+        if (word.matches("(?i)^(True|False)$") ){
             System.out.println("BOOLEAN for "+ word);
             String bool = BooleanTable.addNewBoolean(word);
             return bool;
