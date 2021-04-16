@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CharTable {
+    public static String regex = "^'[A-Z a-z]{1}'";
+
     private static Map<String, String> chars = new LinkedHashMap<String, String>();
 
     public static Map<String, String> getValues() {
@@ -19,7 +21,7 @@ public class CharTable {
     }
 
     public static String getNewChar(){
-        return "char"+ getValuesSize();
+        return "charValue"+ getValuesSize();
     }
 
 

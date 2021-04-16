@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class IntegerTable {
+    public static String regex = "[-+]?[0-9]";
 
     private static Map<String, String> integers = new LinkedHashMap<String, String>();
 
@@ -20,7 +21,7 @@ public class IntegerTable {
     }
 
     public static String getNewInteger(){
-        return "int"+ getValuesSize();
+        return "intValue"+ getValuesSize();
     }
 
 

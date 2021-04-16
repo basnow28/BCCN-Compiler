@@ -34,27 +34,22 @@ public class LexicalAnalyser {
             return token;
         }
 
-        if (word.matches("^'[A-Z a-z]{1}'")){
-            System.out.println("CHAR for "+
-                    word);
+        if (word.matches(CharTable.regex)){
             String caracter = CharTable.addNewChar(word);
             return caracter;
         }
 
-        if (word.matches("[-+]?[0-9]*\\.{1}[0-9]*") ){
-            System.out.println("FLOAT for "+ word);
+        if (word.matches(FloatTable.regex) ){
             String floatt = FloatTable.addNewFloat(word);
             return floatt;
         }
 
-        if (word.matches("[-+]?[0-9]") ){
-            System.out.println("INT for "+ word);
+        if (word.matches(IntegerTable.regex) ){
             String integer = IntegerTable.addNewInteger(word);
             return integer;
         }
 
-        if (word.matches("(?i)^(True|False)$") ){
-            System.out.println("BOOLEAN for "+ word);
+        if (word.matches(BooleanTable.regex) ){
             String bool = BooleanTable.addNewBoolean(word);
             return bool;
         }

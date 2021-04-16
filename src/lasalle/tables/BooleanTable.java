@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BooleanTable {
+        public static String regex = "(?i)^(True|False)$";
 
         private static Map<String, String> booleans = new LinkedHashMap<String, String>();
 
@@ -20,7 +21,7 @@ public class BooleanTable {
         }
 
         public static String getNewBoolean(){
-            return "bool"+ getValuesSize();
+            return "boolValue"+ getValuesSize();
         }
 
 

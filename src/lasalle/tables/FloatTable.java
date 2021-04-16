@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class FloatTable {
+    public static String regex = "[-+]?[0-9]*\\.{1}[0-9]*";
 
     private static Map<String, String> floats = new LinkedHashMap<String, String>();
 
@@ -20,7 +21,7 @@ public class FloatTable {
     }
 
     public static String getNewFloat(){
-        return "float"+ getValuesSize();
+        return "floatValue"+ getValuesSize();
     }
 
 
