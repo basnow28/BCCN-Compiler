@@ -1,0 +1,32 @@
+<IntDeclaration> := int identifier = intValue ;
+<FloatDeclaration> := float identifier = floatValue ;
+<CharDeclaration> := char identifier = charValue ;
+<BooleanDeclaration> := boolean identifier = boolValue ;
+<declaration> := <IntDeclaration>
+<declaration> := <FloatDeclaration>
+<declaration> := <CharDeclaration>
+<declaration> := <BooleanDeclaration>
+<declarations> := ""
+<declarations> := <declaration> <declarations>
+<main> := start { <declarations> } end
+<program> := program <identifier> ; <main>
+
+
+
+Map <NonTerminal, FirstAndFollow>
+where NonTerminal is a String
+
+where first is the first terminal of the grammar rule or the first of the non-terminals in the grammar rule if any (that were already read)
+where follow is the first of the following non-terminals in the grammar or terminal element
+
+FirstAndFollow class would contain two Maps:
+Map<Terminal, Rule> first
+where Terminal, Rule are Strings
+Map<String, String> follow;
+
+
+
+<declaration>--First  int-> <IntDeclaration>
+
+Fisrt
+a- > ""

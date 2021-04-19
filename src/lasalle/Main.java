@@ -17,14 +17,14 @@ public class Main {
         try {
             ArrayList<ArrayList<String>> code = CodeReader.readTheFile("file.txt");
             lexicalArray = new LexicalArray(LexicalAnalyser.readTheFile(code));
+
             System.out.println(lexicalArray.getLexicalArray());
+            System.out.println(IntegerTable.getValues());
 
             //Syntax Analysis of the Code
 
             SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer();
             syntaxAnalyzer.validateCode(lexicalArray, new ParsingTable());
-
-
 
             /*System.out.println(IdentifierTable.getValues());
             System.out.println(IntegerTable.getValues());

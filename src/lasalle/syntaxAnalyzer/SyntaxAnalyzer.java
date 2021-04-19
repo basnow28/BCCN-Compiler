@@ -4,6 +4,7 @@ import lasalle.lexicalAnalyser.LexicalArray;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -17,21 +18,26 @@ public class SyntaxAnalyzer {
 
     public void validateCode(LexicalArray lexicalArray, ParsingTable parsingTable) throws Exception{
         //Use the ParsingStack to analyze the code
-
-        for(int line = 0; line < lexicalArray.getLexicalArray().size() + 1; line++){
+        int line = 0;
+        int token_id = 0;
+        int count=0;
+        while(line < lexicalArray.getLexicalArray().size()){
             ArrayList<String> tokensArray = lexicalArray.getLexicalArray().get(line);
-            for(int token_id = 0; token_id < tokensArray.size() + 1; token_id++){
+            while( token_id < tokensArray.size()){
                 System.out.println(tokensArray.get(token_id));
                 String stackToken = parsingStack.getParsingStack().peek();
                 String inputToken =  tokensArray.get(token_id);
 
-                //check problem with program
-                if (line ==0 && token_id ==0){
+                // Deleting an extra character from the first value in the tokenArray
+                // Because of JAVA adding an extra character when reading the file
+                // Problem with 'program' token
+                if (count==0 || count==1){
                     inputToken= inputToken.substring(1);
+                    count++;
                 }
 
                 if(this.compare(stackToken, inputToken)){
-                    System.out.println("There");
+                    System.out.println("Matches");
                     //If the compare method returns true, remove the values from the stack and the input
                     parsingStack.getParsingStack().pop();
                     System.out.println(parsingStack.getParsingStack());
@@ -45,15 +51,15 @@ public class SyntaxAnalyzer {
                         throw new Exception("There has been an error: " + stackToken + inputToken + " on line: " + line);
                     }else{
                         //If the entry is found, replace the stack
-                        System.out.println(parsingStack.getParsingStack().toString());
                         parsingStack.getParsingStack().pop();
-                        System.out.println(parsingStack.getParsingStack().toString());
                         //for each token in the parseEntry, pop it separately to the stack
                         this.populateStack(parseEntry);
+                        System.out.println(this.parsingStack.getParsingStack());
                     }
                 }
 
             }
+            line++;
         }
         System.out.println(lexicalArray);
         System.out.println(this.parsingStack.getParsingStack());
@@ -66,22 +72,25 @@ public class SyntaxAnalyzer {
         //if so, check if the inputToken is an identifier or intValue, booleanValue, charValue, floatValue - using regex for each identifier
         // if not, return false
 
-        if(stackToken.equals(inputToken)){
+
+        if(stackToken.equals(inputToken)) {
             return true;
         }
-        else if(stackToken == "<identifier>" && inputToken.matches( "^[i][d][0-9]+")){
+        else if(stackToken.equals("identifier")){
+            if(inputToken.matches( "^id[0-9]+")){
+                return true;
+            }
+        }
+        else if(stackToken.equals("intValue") && inputToken.matches("^intValue[0-9]+")){
             return true;
         }
-        else if(stackToken == "intValue" && inputToken.matches("^intValue[0-9]+")){
+        else if(stackToken.equals("charValue") && inputToken.matches("^charValue[0-9]+")){
             return true;
         }
-        else if(stackToken == "charValue" && inputToken.matches("^charValue[0-9]+")){
+        else if(stackToken.equals("boolValue") && inputToken.matches("^boolValue[0-9]+")){
             return true;
         }
-        else if(stackToken == "boolValue" && inputToken.matches("^boolValue[0-9]+")){
-            return true;
-        }
-        else if(stackToken == "floatValue" && inputToken.matches("^floatValue[0-9]+")){
+        else if(stackToken.equals("floatValue") && inputToken.matches("^floatValue[0-9]+")){
             return true;
         }
         return false;
@@ -94,7 +103,6 @@ public class SyntaxAnalyzer {
         String sReversed = "";
 
         while (st.hasMoreTokens()) {
-            System.out.println("test");
             sReversed = st.nextToken() + " " + sReversed;
         }
 
