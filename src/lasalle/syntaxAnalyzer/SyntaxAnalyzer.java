@@ -25,7 +25,13 @@ public class SyntaxAnalyzer {
                 String stackToken = parsingStack.getParsingStack().peek();
                 String inputToken =  tokensArray.get(token_id);
 
+                //check problem with program
+                if (line ==0 && token_id ==0){
+                    inputToken= inputToken.substring(1);
+                }
+
                 if(this.compare(stackToken, inputToken)){
+                    System.out.println("There");
                     //If the compare method returns true, remove the values from the stack and the input
                     parsingStack.getParsingStack().pop();
                     System.out.println(parsingStack.getParsingStack());
@@ -39,7 +45,9 @@ public class SyntaxAnalyzer {
                         throw new Exception("There has been an error: " + stackToken + inputToken + " on line: " + line);
                     }else{
                         //If the entry is found, replace the stack
+                        System.out.println(parsingStack.getParsingStack().toString());
                         parsingStack.getParsingStack().pop();
+                        System.out.println(parsingStack.getParsingStack().toString());
                         //for each token in the parseEntry, pop it separately to the stack
                         this.populateStack(parseEntry);
                     }
@@ -61,7 +69,7 @@ public class SyntaxAnalyzer {
         if(stackToken.equals(inputToken)){
             return true;
         }
-        else if(stackToken == "<identifier>" && inputToken.matches( "^id[0-9]+")){
+        else if(stackToken == "<identifier>" && inputToken.matches( "^[i][d][0-9]+")){
             return true;
         }
         else if(stackToken == "intValue" && inputToken.matches("^intValue[0-9]+")){
@@ -81,7 +89,19 @@ public class SyntaxAnalyzer {
 
     private void populateStack(String parseEntry){
         //Tokenize the input string and populate the stack
-        StringTokenizer stringTokenizer = new StringTokenizer(parseEntry);
+        StringTokenizer st = new StringTokenizer(parseEntry);
+
+        String sReversed = "";
+
+        while (st.hasMoreTokens()) {
+            System.out.println("test");
+            sReversed = st.nextToken() + " " + sReversed;
+        }
+
+        System.out.println("Reversed string is : " + sReversed);
+
+        StringTokenizer stringTokenizer = new StringTokenizer(sReversed);
+
         while(stringTokenizer.hasMoreTokens()){
             String token = stringTokenizer.nextToken();
             //Swap the tokens

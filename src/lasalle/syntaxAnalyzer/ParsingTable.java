@@ -44,18 +44,28 @@ public class ParsingTable {
 
     public String getValue(String stackToken, String inputToken) {
         for (Map.Entry<MapKey, String> entry : parsingTable.entrySet()) {
+
+
+            //to check if a token has don't have an invisible caracter
+            /*final String SEPARATEUR = "";
+                String conte = inputToken;
+
+                String mots[] = conte.split(SEPARATEUR);
+
+                for (int i = 0; i < mots.length; i++) {
+                    System.out.println(mots[i] + i);
+                }
+            */
+
             System.out.println(entry.getKey().getNonTerminal() + " : " + stackToken);
             System.out.println(entry.getKey().getNonTerminal().equals(stackToken));
             System.out.println(entry.getKey().getTerminal() + " : " + inputToken);
-            System.out.println(entry.getKey().getTerminal().equals("program"));
-            System.out.println(inputToken.trim().length());
+            System.out.println(entry.getKey().getTerminal().equals(inputToken));
+            /*System.out.println(inputToken.trim().length());
             System.out.println(entry.getKey().getTerminal().length());
-            System.out.println(inputToken.compareTo(entry.getKey().getTerminal()));
+            System.out.println(inputToken.compareTo(entry.getKey().getTerminal()));*/
 
-
-
-
-            if(entry.getKey().getNonTerminal().equals(stackToken) && entry.getKey().getTerminal().equals("program")) {
+            if(entry.getKey().getNonTerminal().equals(stackToken) && entry.getKey().getTerminal().equals(inputToken)) {
                 return entry.getValue();
             }
         }
