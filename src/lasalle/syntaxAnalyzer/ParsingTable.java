@@ -3,7 +3,7 @@ package lasalle.syntaxAnalyzer;
 import java.util.*;
 
 public class ParsingTable {
-    private LinkedHashMap<MapKey, String> parsingTable;
+    private Map<MapKey, String> parsingTable;
 
     public ParsingTable(){
         //populate hardcoded parsing table for main function
@@ -18,7 +18,7 @@ public class ParsingTable {
 
         parsingTable = new LinkedHashMap<MapKey, String>();
 
-        parsingTable.put(new MapKey("program", "<program>"), " program identifier ; <main> ");
+       /* parsingTable.put(new MapKey("program", "<program>"), " program identifier ; <main> ");
         parsingTable.put(new MapKey("start", "<main>"), " start { <declarations> } end ");
         parsingTable.put(new MapKey("int", "<declarations>"), " <declaration> <declarations> ");
         parsingTable.put(new MapKey("float", "<declarations>"), " <declaration> <declarations> ");
@@ -32,14 +32,17 @@ public class ParsingTable {
         parsingTable.put(new MapKey( "int","<IntDeclaration>" ), " int identifier = intValue ; ");
         parsingTable.put(new MapKey( "float","<FloatDeclaration>" ), " float identifier = floatValue ; ");
         parsingTable.put(new MapKey( "char","<CharDeclaration>" ), " char identifier = charValue ; ");
-        parsingTable.put(new MapKey( "boolean","<BooleanDeclaration>" ), " boolean identifier = boolValue ; ");
+        parsingTable.put(new MapKey( "boolean","<BooleanDeclaration>" ), " boolean identifier = boolValue ; ");*/
 
     }
 
-    public void populateParsingTable(String terminal, String nonTerminal, String value){
-        MapKey mapKey = new MapKey(terminal, nonTerminal);
+    public void populateParsingTable(Map<String, FirstAndFollowMaps> firstAndFollow){
 
-        parsingTable.put(mapKey, value);
+        for(Map.Entry<String, FirstAndFollowMaps> nonTerminalEntry : firstAndFollow.entrySet()){
+            for(Map.Entry<String, String> terminalEntry : nonTerminalEntry.getValue().getFirstMap().entrySet()){
+                parsingTable.put(new MapKey(terminalEntry.getKey(), nonTerminalEntry.getKey()), terminalEntry.getValue());
+            }
+        }
     }
 
     public String getValue(String stackToken, String inputToken) {

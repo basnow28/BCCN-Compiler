@@ -16,19 +16,23 @@ public class Main {
     public static void main(String[] args) {
         LexicalArray lexicalArray;
         try {
-            /*ArrayList<ArrayList<String>> code = CodeReader.readTheFile("file.txt");
-            lexicalArray = new LexicalArray(LexicalAnalyser.readTheFile(code));
+            /*;
+
 
             System.out.println(lexicalArray.getLexicalArray());
             System.out.println(IntegerTable.getValues());
 
-            //Syntax Analysis of the Code
-
+            //Syntax Analysis of the Code*/
+            ArrayList<ArrayList<String>> code = CodeReader.readTheFile("file.txt");
+            lexicalArray = new LexicalArray(LexicalAnalyser.readTheFile(code));
             SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer();
-            syntaxAnalyzer.validateCode(lexicalArray, new ParsingTable());*/
 
             FirstAndFollow.populateFirstAndFollowFromGrammarFile();
-            System.out.println(FirstAndFollow.firstAndFollow);
+            ParsingTable parsingTable = new ParsingTable();
+            parsingTable.populateParsingTable(FirstAndFollow.firstAndFollow);
+            System.out.println(parsingTable);
+            syntaxAnalyzer.validateCode(lexicalArray, parsingTable);
+            //System.out.println(FirstAndFollow.firstAndFollow);
             /*System.out.println(IdentifierTable.getValues());
             System.out.println(IntegerTable.getValues());
             System.out.println(FloatTable.getValues());
