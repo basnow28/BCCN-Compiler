@@ -1,5 +1,7 @@
 package lasalle.syntaxAnalyzer;
 
+import java.util.Map;
+
 public class MapKey {
     private String terminal;
     private String nonTerminal;
@@ -23,5 +25,14 @@ public class MapKey {
 
     public void setNonTerminal(String non_terminal) {
         this.nonTerminal = non_terminal;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stb = new StringBuilder();
+
+            stb.append("NonTerminal: ").append(MapKey.this.nonTerminal)
+                    .append("; Terminal: ").append(MapKey.this.terminal);
+        return stb.toString();
     }
 }

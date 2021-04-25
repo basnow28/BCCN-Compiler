@@ -9,4 +9,4 @@
 <declarations> := ""
 <declarations> := <declaration> <declarations>
 <main> := start { <declarations> } end
-<program> := program <identifier> ; <main>
+<program> := program identifier ; <main>

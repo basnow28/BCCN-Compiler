@@ -60,10 +60,15 @@ public class FirstAndFollow {
 
             for (Map.Entry<String, FirstAndFollowMaps> nonTerminalEntry : firstAndFollow.entrySet()) {
                 if(nonTerminalEntry.getKey().equals(token)){
+
                     doesNonTerminalExist = true;
-                    //Populate a new entry with the nonTerminal existing firsts and follows
-                    //Copying all the first rules of the nonTerminal
-                    entry.getValue().addNewFirstMapEntries(nonTerminalEntry.getValue().getFirstMap());
+                    //Populate a new entry with the nonTerminal existing firsts and the grammar
+                    //Copying all the first of the nonTerminal and creating a new rules with it and the grammar
+                    for(Map.Entry<String, String> terminalEntry : nonTerminalEntry.getValue().getFirstMap().entrySet()){
+                        String token2 = terminalEntry.getKey();
+                        entry.getValue().addFirstRule(token2, grammarRule);
+                        //System.out.println(entry.getValue().addFirstRule(token2, grammarRule));
+                    }
                 }
             }
             if(!doesNonTerminalExist){
@@ -91,6 +96,7 @@ public class FirstAndFollow {
         for (Map.Entry<String, FirstAndFollowMaps> entry : firstAndFollow.entrySet()){
             if(entry.getKey().equals(nonTerminal)){
                 //Add new first and follow rules to the existing entry based on the grammar rules
+
                 try {
                     populateFirstRules(entry, grammarRule);
                 } catch (Exception exception) {

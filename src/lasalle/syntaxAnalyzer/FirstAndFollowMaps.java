@@ -23,6 +23,7 @@ public class FirstAndFollowMaps {
         return firstMap;
     }
 
+
     public void setFirstMap(Map<String, String> firstMap) {
         this.firstMap = firstMap;
     }

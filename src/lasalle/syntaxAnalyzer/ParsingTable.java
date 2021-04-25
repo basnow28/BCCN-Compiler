@@ -74,4 +74,13 @@ public class ParsingTable {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stb = new StringBuilder();
+        for (Map.Entry<MapKey, String> entry : parsingTable.entrySet()) {
+            stb.append(entry.getKey()).append("; grammarRule: ").append(entry.getValue()).append("\n");
+        }
+        return stb.toString();
+    }
 }
