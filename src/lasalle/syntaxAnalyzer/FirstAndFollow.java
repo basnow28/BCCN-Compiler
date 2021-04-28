@@ -76,11 +76,16 @@ public class FirstAndFollow {
             }
         }else {
             //if the first token is a terminal, create a new first rule
-            entry.getValue().addFirstRule(token, grammarRule);
+            //When the grammar rule is empty, create a rule with the follow
+            if(grammarRule.equals("")){
+
+            }else{
+                entry.getValue().addFirstRule(token, grammarRule);
+            }
         }
     }
 
-    private static boolean isTokenANonTerminal(String token){
+    public static boolean isTokenANonTerminal(String token){
         return token.startsWith("<") && token.endsWith(">");
     }
 

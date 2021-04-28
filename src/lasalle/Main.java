@@ -30,9 +30,10 @@ public class Main {
             FirstAndFollow.populateFirstAndFollowFromGrammarFile();
             ParsingTable parsingTable = new ParsingTable();
             parsingTable.populateParsingTable(FirstAndFollow.firstAndFollow);
+            //System.out.println(FirstAndFollow.firstAndFollow);
             System.out.println(parsingTable);
             syntaxAnalyzer.validateCode(lexicalArray, parsingTable);
-            //System.out.println(FirstAndFollow.firstAndFollow);
+
             /*System.out.println(IdentifierTable.getValues());
             System.out.println(IntegerTable.getValues());
             System.out.println(FloatTable.getValues());
