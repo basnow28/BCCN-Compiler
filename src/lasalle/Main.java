@@ -7,9 +7,12 @@ import lasalle.syntaxAnalyzer.FirstAndFollow;
 import lasalle.syntaxAnalyzer.ParsingTable;
 import lasalle.syntaxAnalyzer.SyntaxAnalyzer;
 import lasalle.tables.*;
+import lasalle.trees.ParsingTreeNode;
+import lasalle.trees.ParsingTreeNodeIterator;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Main {
 
@@ -23,6 +26,15 @@ public class Main {
             System.out.println(IntegerTable.getValues());
 
             //Syntax Analysis of the Code*/
+            ParsingTreeNode parsingTreeNode = new ParsingTreeNode("parent");
+            ParsingTreeNode child1 = parsingTreeNode.addChild("child1");
+            child1.addChild("child2");
+
+            ParsingTreeNodeIterator iterator = (ParsingTreeNodeIterator) parsingTreeNode.iterator();
+            while(iterator.hasNext()){
+                System.out.println(iterator.next());
+            }
+
             ArrayList<ArrayList<String>> code = CodeReader.readTheFile("file.txt");
             lexicalArray = new LexicalArray(LexicalAnalyser.readTheFile(code));
             SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer();
