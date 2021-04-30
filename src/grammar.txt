@@ -6,6 +6,7 @@
 <declaration> := <FloatDeclaration>
 <declaration> := <CharDeclaration>
 <declaration> := <BooleanDeclaration>
+<aaa> := int
 <declarations> := ""
 <declarations> := <declaration> <declarations>
 <main> := start { <declarations> } end
