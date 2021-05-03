@@ -31,10 +31,10 @@ public class SyntaxAnalyzer {
                 // Deleting an extra character from the first value in the tokenArray
                 // Because of JAVA adding an extra character when reading the file
                 // Problem with 'program' token
-                if (count==0 || count==1){
+                /*if (count==0 || count==1){
                     inputToken= inputToken.substring(1);
                     count++;
-                }
+                }*/
 
                 if(this.compare(stackToken, inputToken)){
                     System.out.println("Matches");
@@ -66,7 +66,7 @@ public class SyntaxAnalyzer {
 
     }
 
-    private boolean compare(String stackToken, String inputToken){
+    public static boolean compare(String stackToken, String inputToken){
         //Check if the stackToken and inputToken are equals
         //If not, check if the stackToken is an identifier,
         //if so, check if the inputToken is an identifier or intValue, booleanValue, charValue, floatValue - using regex for each identifier

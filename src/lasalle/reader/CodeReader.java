@@ -14,16 +14,25 @@ public class CodeReader {
         BufferedReader bufferedReader= new BufferedReader(new FileReader(fileName));
         String line = "";
         Scanner scanner= null;
+        int codeLine = 0;
+        int tokenId = 0;
 
         while((line = bufferedReader.readLine()) != null){
             linesOfCode.add(new ArrayList<String>());
             int lineNumber=linesOfCode.size() -1;
             scanner = new Scanner(line);
             while(scanner.hasNext()){
-                linesOfCode.get(lineNumber).add(scanner.next());
+                if(codeLine == 0 && tokenId == 0){
+                    String tokenToUpdate = scanner.next();
+                    tokenToUpdate = tokenToUpdate.substring(1);
+                    linesOfCode.get(lineNumber).add(tokenToUpdate);
+                    codeLine++;
+                    tokenId++;
+                }else {
+                    linesOfCode.get(lineNumber).add(scanner.next());
+                }
             }
         }
         return linesOfCode;
     }
-
 }

@@ -6,8 +6,13 @@
 <declaration> := <FloatDeclaration>
 <declaration> := <CharDeclaration>
 <declaration> := <BooleanDeclaration>
-<aaa> := int
+<term> := identifier
+<term> := intValue
+<calculation> := ""
+<calculation> := + <term> <calculation>
+<calculation> := - <term> <calculation>
+<assignment> := identifier = <term> <calculation> ;
 <declarations> := ""
 <declarations> := <declaration> <declarations>
-<main> := start { <declarations> } end
+<main> := start { <declarations> <assignment> } end
 <program> := program identifier ; <main>

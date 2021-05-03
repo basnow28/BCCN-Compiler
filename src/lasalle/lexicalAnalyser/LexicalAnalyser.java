@@ -15,7 +15,7 @@ public class LexicalAnalyser {
     public static ArrayList<ArrayList<String>> readTheFile(ArrayList<ArrayList<String>> linesOfCode ){
 
         for ( ArrayList<String> line : linesOfCode) {
-            for (int i = 1; i < line.size(); i++) {
+            for (int i = 0; i < line.size(); i++) {
                 String identifier = identifyToken(line.get(i));
                 line.set(i, identifier);
             }

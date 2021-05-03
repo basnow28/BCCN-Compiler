@@ -191,7 +191,7 @@ public class ParsingTable {
             System.out.println(entry.getKey().getTerminal().length());
             System.out.println(inputToken.compareTo(entry.getKey().getTerminal()));*/
 
-            if(entry.getKey().getNonTerminal().equals(stackToken) && entry.getKey().getTerminal().equals(inputToken)) {
+            if(entry.getKey().getNonTerminal().equals(stackToken) && SyntaxAnalyzer.compare(entry.getKey().getTerminal(), inputToken)) {
                 return entry.getValue();
             }
         }
