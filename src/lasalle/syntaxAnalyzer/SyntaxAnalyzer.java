@@ -1,6 +1,7 @@
 package lasalle.syntaxAnalyzer;
 
 import lasalle.lexicalAnalyser.LexicalArray;
+import lasalle.trees.ParsingTree;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -40,6 +41,7 @@ public class SyntaxAnalyzer {
                     System.out.println("Matches");
                     //If the compare method returns true, remove the values from the stack and the input
                     parsingStack.getParsingStack().pop();
+                    ParsingTree.updateTreeNodeValueWhenMatch(stackToken, inputToken);
                     System.out.println(parsingStack.getParsingStack());
                     tokensArray.remove(token_id);
                 }else {
@@ -54,7 +56,8 @@ public class SyntaxAnalyzer {
                         parsingStack.getParsingStack().pop();
                         //for each token in the parseEntry, pop it separately to the stack
                         this.populateStack(parseEntry);
-                        System.out.println(this.parsingStack.getParsingStack());
+                        ParsingTree.populateParsingTree(parseEntry);
+                        //System.out.println(this.parsingStack.getParsingStack());
                     }
                 }
 
@@ -106,15 +109,16 @@ public class SyntaxAnalyzer {
             sReversed = st.nextToken() + " " + sReversed;
         }
 
-        System.out.println("Reversed string is : " + sReversed);
-
         StringTokenizer stringTokenizer = new StringTokenizer(sReversed);
 
         while(stringTokenizer.hasMoreTokens()){
             String token = stringTokenizer.nextToken();
             //Swap the tokens
-            System.out.println("String token: " + token);
             this.parsingStack.getParsingStack().push(token);
+
+            //Populating Parsing Tree
+            //adding the following tags to the stack of the nextNode to be read
+
         }
     }
 }

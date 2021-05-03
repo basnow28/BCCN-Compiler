@@ -7,6 +7,7 @@ import lasalle.syntaxAnalyzer.FirstAndFollow;
 import lasalle.syntaxAnalyzer.ParsingTable;
 import lasalle.syntaxAnalyzer.SyntaxAnalyzer;
 import lasalle.tables.*;
+import lasalle.trees.ParsingTree;
 import lasalle.trees.ParsingTreeNode;
 import lasalle.trees.ParsingTreeNodeIterator;
 
@@ -43,6 +44,14 @@ public class Main {
             System.out.println(FloatTable.getValues());
             System.out.println(CharTable.getValues());
             System.out.println(BooleanTable.getValues());*/
+
+            Iterator<ParsingTreeNode<String>> iterator = ParsingTree.getParsingTree().iterator();
+
+            System.out.println("Parsing Tree");
+            while(iterator.hasNext()){
+                System.out.println(iterator.next());
+            }
+
         }
         catch (IOException e){
             System.out.print(e.getMessage());

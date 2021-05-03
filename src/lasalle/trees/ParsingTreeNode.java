@@ -11,7 +11,6 @@ public class ParsingTreeNode<T> implements Iterable<ParsingTreeNode<T>> {
     public ParsingTreeNode(T data){
         this.data = data;
         this.children = new LinkedList<ParsingTreeNode<T>>();
-
     }
 
     public ParsingTreeNode<T> addChild(T treeChild){
@@ -35,6 +34,10 @@ public class ParsingTreeNode<T> implements Iterable<ParsingTreeNode<T>> {
         }else {
             return parent.getLevel() + 1;
         }
+    }
+
+    public void updateValue(T value){
+        this.data = value;
     }
 
     @Override
