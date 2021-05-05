@@ -23,6 +23,11 @@ public class ParsingTreeNodeIterator<T> implements Iterator<ParsingTreeNode<T>> 
         this.childrenCurrentNodeIterator = parsingTreeNode.children.iterator();
     }
 
+    public void updateChildrenIterator(ParsingTreeNode<T> parsingTreeNode){
+        this.childrenCurrentNodeIterator = parsingTreeNode.children.iterator();
+        this.nextProcessStage = ProcessStages.ProcessChildCurrentNode;
+    }
+
 
     @Override
     public boolean hasNext() {

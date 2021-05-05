@@ -13,10 +13,11 @@ public class ParsingTreeNode<T> implements Iterable<ParsingTreeNode<T>> {
         this.children = new LinkedList<ParsingTreeNode<T>>();
     }
 
-    public ParsingTreeNode<T> addChild(T treeChild){
+    public ParsingTreeNode<T> addChild(T treeChild, ParsingTreeNodeIterator<T> iterator ){
         ParsingTreeNode<T> childParsingTreeNode = new ParsingTreeNode<>(treeChild);
         childParsingTreeNode.parent = this;
         this.children.add(childParsingTreeNode);
+        iterator.updateChildrenIterator(this);
         return childParsingTreeNode;
     }
 

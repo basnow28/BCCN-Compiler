@@ -9,13 +9,7 @@ public class ParsingTree {
 
     public static void populateParsingTree(String parseEntry){
         //Tokenize the input string and populate the stack
-        StringTokenizer st = new StringTokenizer(parseEntry);
-        String sReversed = "";
-        while (st.hasMoreTokens()) {
-            sReversed = st.nextToken() + " " + sReversed;
-        }
-
-        StringTokenizer stringTokenizer = new StringTokenizer(sReversed);
+        StringTokenizer stringTokenizer = new StringTokenizer(parseEntry);
 
         if(parsingTreeNodeIterator.hasNext()) {
             ParsingTreeNode<String> node = parsingTreeNodeIterator.next();
@@ -26,7 +20,7 @@ public class ParsingTree {
                 String token = stringTokenizer.nextToken();
                 System.out.print("Children:  ");
                 System.out.print(token);
-                node.addChild(token);
+                node.addChild(token, (ParsingTreeNodeIterator<String>) parsingTreeNodeIterator);
             }
         }
     }
@@ -36,6 +30,9 @@ public class ParsingTree {
             if (parsingTreeNodeIterator.hasNext()) {
                 parsingTreeNodeIterator.next().updateValue(inputToken);
             }
+        }else{
+            parsingTreeNodeIterator.hasNext();
+            parsingTreeNodeIterator.next();
         }
     }
 
