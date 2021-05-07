@@ -4,6 +4,8 @@ import java.util.*;
 
 public class ParsingTable {
     private static Map<MapKey, String> parsingTable;
+    //This Map is used as a temporary storage when creating new rules when the terminal is empty and there is an existing grammar rule
+    private static Map<MapKey, String> tempTableEmptyRules;
 
     public ParsingTable(){
         //populate hardcoded parsing table for main function
@@ -17,6 +19,7 @@ public class ParsingTable {
         //<identifier>, intValue, floatValue, booleanValue can be found in their respectives tables
 
         parsingTable = new HashMap<MapKey, String>();
+        tempTableEmptyRules = new HashMap<>();
 
        /* parsingTable.put(new MapKey("program", "<program>"), " program identifier ; <main> ");
         parsingTable.put(new MapKey("start", "<main>"), " start { <declarations> } end ");
@@ -50,7 +53,35 @@ public class ParsingTable {
         removeEmptyTerminalEntries();
 
         parsingTable.putAll(TemporaryParsingTableOfEmptyRules.temporaryParsingTable);
+
+        replaceEmptyTerminalWhenThereIsAGrammarRule();
+        parsingTable.putAll(tempTableEmptyRules);
+
         TemporaryParsingTableOfEmptyRules.temporaryParsingTable.clear();
+        tempTableEmptyRules.clear();
+    }
+
+    private void replaceEmptyTerminalWhenThereIsAGrammarRule() {
+        for(Map.Entry<MapKey, String> parsingTableEntry : parsingTable.entrySet()) {
+            if (parsingTableEntry.getKey().getTerminal().equals("\"\"") && !parsingTableEntry.getValue().equals("\"\" ")) {
+                //If the terminal is empty, search for occurence of the corresponding nonTerminal in the grammar rules
+                replaceEmptyTerminalWithTemporaryParsingTableEntry(
+                        parsingTableEntry.getKey().getNonTerminal(),
+                        parsingTableEntry.getValue());
+            }
+        }
+    }
+
+    private void replaceEmptyTerminalWithTemporaryParsingTableEntry(String initialNonTerminal, String grammarRule){
+        Scanner grammarScanner = new Scanner(grammarRule);
+        if(grammarScanner.hasNext()){
+            String token = grammarScanner.next();
+            for(Map.Entry<MapKey, String> tempEntry : TemporaryParsingTableOfEmptyRules.temporaryParsingTable.entrySet()){
+                if(tempEntry.getKey().getNonTerminal().equals(token)){
+                    tempTableEmptyRules.put(new MapKey(tempEntry.getKey().getTerminal(), initialNonTerminal),grammarRule);
+                }
+            }
+        }
     }
 
     private void replaceEmptyTerminalWithANonEmpty(){
@@ -71,7 +102,7 @@ public class ParsingTable {
          */
 
         for(Map.Entry<MapKey, String> parsingTableEntry : parsingTable.entrySet()) {
-            if(parsingTableEntry.getKey().getTerminal().equals("\"\"") && parsingTableEntry.getValue().equals("\"\"")){
+            if(parsingTableEntry.getKey().getTerminal().equals("\"\"") && parsingTableEntry.getValue().equals("\"\" ")){
                 //If the terminal is empty, search for occurence of the corresponding nonTerminal in the grammar rules
                 replaceEmptyTerminalEntry(parsingTableEntry.getKey().getNonTerminal(), parsingTableEntry.getKey().getNonTerminal()) ;
             }
@@ -82,14 +113,22 @@ public class ParsingTable {
 
         for (Map.Entry<MapKey, String> grammarEntry : parsingTable.entrySet()) {
             //First Case
+
             if (grammarEntry.getValue().contains(upperLevelNonTerminal)) {
 
                 if (grammarEntry.getValue().endsWith(upperLevelNonTerminal+" ")) {
+                    /*System.out.println("PASSED");
+                    System.out.println(initialNonTerminal);
+                    System.out.println(upperLevelNonTerminal);
+                    System.out.println(grammarEntry.getValue());
+                    System.out.println(grammarEntry.getKey().getNonTerminal());*/
                     //needed for <declaration> <declarations> which could be infinite
-                    if (!initialNonTerminal.equals(grammarEntry.getKey().getNonTerminal())) {
+                    if (!upperLevelNonTerminal.equals(grammarEntry.getKey().getNonTerminal()) ) {
+                        System.out.println("ELSEEEEEE");
                         replaceEmptyTerminalEntry(initialNonTerminal, grammarEntry.getKey().getNonTerminal());
                     }
                 } else {
+
                     ///Find the following element
                     //Loop through all the elements in MapKey that has the upperLevelNonTerminal key
                     //create the rule taking the terminal
@@ -156,7 +195,7 @@ public class ParsingTable {
     private void removeEmptyTerminalEntries(){
         ArrayList<MapKey> entryKeys = new ArrayList<>();
         for(Map.Entry<MapKey, String> parsingTableEntry : parsingTable.entrySet()) {
-            if(parsingTableEntry.getKey().getTerminal().equals("\"\"")){
+            if(parsingTableEntry.getKey().getTerminal().equals("\"\"") && parsingTableEntry.getValue().equals("\"\" ")){
                 //If the terminal is empty, search for occurence of the corresponding nonTerminal in the grammar rule
                 entryKeys.add(parsingTableEntry.getKey());
             }

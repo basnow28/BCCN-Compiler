@@ -45,12 +45,12 @@ public class Main {
             System.out.println(CharTable.getValues());
             System.out.println(BooleanTable.getValues());*/
 
-            Iterator<ParsingTreeNode<String>> iterator = ParsingTree.getParsingTree().iterator();
+            /*Iterator<ParsingTreeNode<String>> iterator = ParsingTree.getParsingTree().iterator();
             ParsingTreeNode<String> node = ParsingTree.getParsingTree();
             System.out.println("Parsing Tree");
             while(iterator.hasNext()){
                 System.out.println(iterator.next());
-            }
+            }*/
 
         }
         catch (IOException e){

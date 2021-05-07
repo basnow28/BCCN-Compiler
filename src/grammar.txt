@@ -17,7 +17,7 @@
 <calculation> := - <term> <calculation>
 <calculatio> := <leftterm> <calculation>
 <calculations> := ""
-<calculations> := <calculatio> <calculations>
+<calculations> := <term> <calculatio> <calculations>
 <assignment> := ""
 <assignment> := identifier = <calculations> ;
 <declarations> := ""

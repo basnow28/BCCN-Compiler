@@ -35,4 +35,16 @@ public class MapKey {
                     .append("; Terminal: ").append(MapKey.this.terminal);
         return stb.toString();
     }
+
+
+    @Override
+    public int hashCode() {
+        return terminal.hashCode() + nonTerminal.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        MapKey mapKey = (MapKey) obj;
+        return mapKey.getNonTerminal().equals(this.nonTerminal) && mapKey.getTerminal().equals(this.terminal);
+    }
 }
