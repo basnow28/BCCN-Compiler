@@ -71,9 +71,9 @@ public class ParsingTable {
          */
 
         for(Map.Entry<MapKey, String> parsingTableEntry : parsingTable.entrySet()) {
-            if(parsingTableEntry.getKey().getTerminal().equals("\"\"")){
+            if(parsingTableEntry.getKey().getTerminal().equals("\"\"") && parsingTableEntry.getValue().equals("\"\"")){
                 //If the terminal is empty, search for occurence of the corresponding nonTerminal in the grammar rules
-                replaceEmptyTerminalEntry(parsingTableEntry.getKey().getNonTerminal(), parsingTableEntry.getKey().getNonTerminal());
+                replaceEmptyTerminalEntry(parsingTableEntry.getKey().getNonTerminal(), parsingTableEntry.getKey().getNonTerminal()) ;
             }
         }
     }

@@ -8,11 +8,20 @@
 <declaration> := <BooleanDeclaration>
 <term> := identifier
 <term> := intValue
+<leftterm> := ""
+<leftterm> := <term>
+<leftterm> := * <term> <leftterm>
+<leftterm> := / <term> <leftterm>
 <calculation> := ""
 <calculation> := + <term> <calculation>
 <calculation> := - <term> <calculation>
-<assignment> := identifier = <term> <calculation> ;
+<calculatio> := <leftterm> <calculation>
+<calculations> := ""
+<calculations> := <calculatio> <calculations>
+<assignment> := ""
+<assignment> := identifier = <calculations> ;
 <declarations> := ""
 <declarations> := <declaration> <declarations>
+<assignment> := ""
 <main> := start { <declarations> <assignment> } end
 <program> := program identifier ; <main>
