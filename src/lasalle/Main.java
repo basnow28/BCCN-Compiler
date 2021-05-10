@@ -7,6 +7,7 @@ import lasalle.syntaxAnalyzer.FirstAndFollow;
 import lasalle.syntaxAnalyzer.ParsingTable;
 import lasalle.syntaxAnalyzer.SyntaxAnalyzer;
 import lasalle.tables.*;
+import lasalle.tac.TagResultsArray;
 import lasalle.trees.ParsingTree;
 import lasalle.trees.ParsingTreeNode;
 import lasalle.trees.ParsingTreeNodeIterator;
@@ -51,6 +52,8 @@ public class Main {
             while(iterator.hasNext()){
                 System.out.println(iterator.next());
             }*/
+
+            TagResultsArray tagResultsArray = new TagResultsArray();
 
         }
         catch (IOException e){
