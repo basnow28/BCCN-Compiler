@@ -30,7 +30,7 @@ public class FirstAndFollow {
                     if(word_id == 1){
                         nonTerminal = scanner.next();
                         if(!isTokenANonTerminal(nonTerminal)){
-                            throw new Exception("All the grammar rules need to start with a non terminal");
+                            throw new Exception("All the grammar rules need to start with a non terminal, line: " + nonTerminal);
                         }
                     }
                     else if(word_id > 2){

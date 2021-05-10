@@ -50,12 +50,27 @@ public class ParsingTable {
         System.out.println(parsingTable);
 
         replaceEmptyTerminalWithANonEmpty();
-        removeEmptyTerminalEntries();
+        removeEmptyTerminalAndGrammarEntries();
 
         parsingTable.putAll(TemporaryParsingTableOfEmptyRules.temporaryParsingTable);
 
         replaceEmptyTerminalWhenThereIsAGrammarRule();
         parsingTable.putAll(tempTableEmptyRules);
+        removeEmptyTerminalEntries();
+
+        System.out.println("Temporary Parsing Table");
+        for(Map.Entry<MapKey, String> tempEntry : TemporaryParsingTableOfEmptyRules.temporaryParsingTable.entrySet()){
+            System.out.print("Non Terminal: " + tempEntry.getKey().getNonTerminal());
+            System.out.print(" Terminal: " + tempEntry.getKey().getTerminal());
+            System.out.println(" Value: " + tempEntry.getValue());
+        }
+
+        System.out.println("Temp Parsing Table");
+        for(Map.Entry<MapKey, String> tempEntry : tempTableEmptyRules.entrySet()){
+            System.out.print("Non Terminal: " + tempEntry.getKey().getNonTerminal());
+            System.out.print(" Terminal: " + tempEntry.getKey().getTerminal());
+            System.out.println(" Value: " + tempEntry.getValue());
+        }
 
         TemporaryParsingTableOfEmptyRules.temporaryParsingTable.clear();
         tempTableEmptyRules.clear();
@@ -192,10 +207,24 @@ public class ParsingTable {
         }
     }
 
-    private void removeEmptyTerminalEntries(){
+    private void removeEmptyTerminalAndGrammarEntries(){
         ArrayList<MapKey> entryKeys = new ArrayList<>();
         for(Map.Entry<MapKey, String> parsingTableEntry : parsingTable.entrySet()) {
             if(parsingTableEntry.getKey().getTerminal().equals("\"\"") && parsingTableEntry.getValue().equals("\"\" ")){
+                //If the terminal is empty, search for occurence of the corresponding nonTerminal in the grammar rule
+                entryKeys.add(parsingTableEntry.getKey());
+            }
+        }
+
+        for(MapKey mapKey : entryKeys) {
+            parsingTable.remove(mapKey);
+        }
+    }
+
+    private void removeEmptyTerminalEntries(){
+        ArrayList<MapKey> entryKeys = new ArrayList<>();
+        for(Map.Entry<MapKey, String> parsingTableEntry : parsingTable.entrySet()) {
+            if(parsingTableEntry.getKey().getTerminal().equals("\"\"")){
                 //If the terminal is empty, search for occurence of the corresponding nonTerminal in the grammar rule
                 entryKeys.add(parsingTableEntry.getKey());
             }

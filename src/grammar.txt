@@ -6,10 +6,11 @@
 <declaration> := <FloatDeclaration>
 <declaration> := <CharDeclaration>
 <declaration> := <BooleanDeclaration>
+<declarations> := ""
+<declarations> := <declaration> <declarations>
 <term> := identifier
 <term> := intValue
 <leftterm> := ""
-<leftterm> := <term>
 <leftterm> := * <term> <leftterm>
 <leftterm> := / <term> <leftterm>
 <calculation> := ""
@@ -17,11 +18,27 @@
 <calculation> := - <term> <calculation>
 <calculatio> := <leftterm> <calculation>
 <calculations> := ""
-<calculations> := <term> <calculatio> <calculations>
-<assignment> := ""
-<assignment> := identifier = <calculations> ;
-<declarations> := ""
-<declarations> := <declaration> <declarations>
-<assignment> := ""
-<main> := start { <declarations> <assignment> } end
+<calculations> := <calculatio> <calculations>
+<calculationsss> := <term> <calculations>
+<assignment> := identifier = <calculationsss> ;
+<condition> := NOTEQUALS <term>
+<condition> := EQUALS <term>
+<condition> := > <term>
+<condition> := < <term>
+<conditions> := [ <term> <condition> ]
+<ifelse> := ifelse <conditions> { <expressions> }
+<if> := if <conditions> { <expressions> }
+<else> := else { <expressions> }
+<else> := ""
+<ifelses> := ""
+<ifelses> := <ifelse> <ifelses>
+<elses> := <else>
+<elses> := <ifelses> <else>
+<ifs> := <if> <elses>
+<loop> := <ifs>
+<expression> := <assignment>
+<expression> := <loop>
+<expressions> := ""
+<expressions> := <expression> <expressions>
+<main> := start { <declarations> <expressions> } end
 <program> := program identifier ; <main>
