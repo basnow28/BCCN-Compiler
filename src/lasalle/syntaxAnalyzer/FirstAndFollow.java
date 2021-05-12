@@ -4,11 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class FirstAndFollow {
-    public static Map<String, FirstAndFollowMaps> firstAndFollow = new HashMap<>();
+    public static Map<String, FirstAndFollowMaps> firstAndFollow = new LinkedHashMap<>();
     // where the key is a corresponding NonTerminal of the first and follow rules
     private static String grammarFile = "grammar.txt";
 
@@ -46,6 +47,7 @@ public class FirstAndFollow {
                 // If so, add first and follow rules to the map under the nonTerminal key
                 // If the non terminal doesn't exist put a new entry in the Map
                 addFirst(nonTerminal, grammarRule);
+                ParsingTable.nonTerminalsList.add(nonTerminal);
             }
     }
 
@@ -75,13 +77,9 @@ public class FirstAndFollow {
                 throw new Exception("The non terminal doesn't have an entry for the grammar rule: " + grammarRule + "\n Non Terminal: " + token);
             }
         }else {
-            //if the first token is a terminal, create a new first rule
+            // if the first token is a terminal, create a new first rule
             //When the grammar rule is empty, create a rule with the follow
-            if(grammarRule.equals("")){
-
-            }else{
-                entry.getValue().addFirstRule(token, grammarRule);
-            }
+            entry.getValue().addFirstRule(token, grammarRule);
         }
     }
 

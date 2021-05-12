@@ -10,9 +10,9 @@
 <declarations> := <declaration> <declarations>
 <term> := identifier
 <term> := intValue
-<leftterm> := ""
 <leftterm> := * <term> <leftterm>
 <leftterm> := / <term> <leftterm>
+<leftterm> := ""
 <calculation> := ""
 <calculation> := + <term> <calculation>
 <calculation> := - <term> <calculation>
@@ -36,8 +36,10 @@
 <elses> := <ifelses> <else>
 <ifs> := <if> <elses>
 <loop> := <ifs>
+<while> := while <conditions> { <expressions> }
 <expression> := <assignment>
 <expression> := <loop>
+<expression> := <while>
 <expressions> := ""
 <expressions> := <expression> <expressions>
 <main> := start { <declarations> <expressions> } end

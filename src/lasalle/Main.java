@@ -4,6 +4,7 @@ import lasalle.lexicalAnalyser.LexicalAnalyser;
 import lasalle.lexicalAnalyser.LexicalArray;
 import lasalle.reader.CodeReader;
 import lasalle.syntaxAnalyzer.FirstAndFollow;
+import lasalle.syntaxAnalyzer.MapKey;
 import lasalle.syntaxAnalyzer.ParsingTable;
 import lasalle.syntaxAnalyzer.SyntaxAnalyzer;
 import lasalle.tables.*;
@@ -15,6 +16,7 @@ import lasalle.trees.ParsingTreeNodeIterator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 public class Main {
 
@@ -34,11 +36,18 @@ public class Main {
             SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer();
 
             FirstAndFollow.populateFirstAndFollowFromGrammarFile();
+            System.out.println("NonTerminal List: " + ParsingTable.nonTerminalsList);
             ParsingTable parsingTable = new ParsingTable();
             parsingTable.populateParsingTable(FirstAndFollow.firstAndFollow);
-            //System.out.println(FirstAndFollow.firstAndFollow);
+            System.out.println("First and Follow" + FirstAndFollow.firstAndFollow);
             System.out.println(parsingTable);
-            syntaxAnalyzer.validateCode(lexicalArray, parsingTable);
+            for(Map.Entry<MapKey, String> tempEntry :  ParsingTable.temporaryParsingTable.entrySet()){
+                System.out.print("Non Terminal: " + tempEntry.getKey().getNonTerminal());
+                System.out.print(" Terminal: " + tempEntry.getKey().getTerminal());
+                System.out.println(" Value: " + tempEntry.getValue());
+            }
+
+            //syntaxAnalyzer.validateCode(lexicalArray, parsingTable);
 
             /*System.out.println(IdentifierTable.getValues());
             System.out.println(IntegerTable.getValues());

@@ -6,6 +6,8 @@ public class ParsingTable {
     private static Map<MapKey, String> parsingTable;
     //This Map is used as a temporary storage when creating new rules when the terminal is empty and there is an existing grammar rule
     private static Map<MapKey, String> tempTableEmptyRules;
+    public static Set<String> nonTerminalsList = new LinkedHashSet<>();
+    public static Map<MapKey, String> temporaryParsingTable = new LinkedHashMap<>();
 
     public ParsingTable(){
         //populate hardcoded parsing table for main function
@@ -18,8 +20,8 @@ public class ParsingTable {
 
         //<identifier>, intValue, floatValue, booleanValue can be found in their respectives tables
 
-        parsingTable = new HashMap<MapKey, String>();
-        tempTableEmptyRules = new HashMap<>();
+        parsingTable = new LinkedHashMap<MapKey, String>();
+        tempTableEmptyRules = new LinkedHashMap<>();
 
        /* parsingTable.put(new MapKey("program", "<program>"), " program identifier ; <main> ");
         parsingTable.put(new MapKey("start", "<main>"), " start { <declarations> } end ");
@@ -47,19 +49,17 @@ public class ParsingTable {
             }
         }
 
-        System.out.println(parsingTable);
-
         replaceEmptyTerminalWithANonEmpty();
-        removeEmptyTerminalAndGrammarEntries();
+        //removeEmptyTerminalAndGrammarEntries();
 
-        parsingTable.putAll(TemporaryParsingTableOfEmptyRules.temporaryParsingTable);
+        //putAllTempEntries(temporaryParsingTable);
 
-        replaceEmptyTerminalWhenThereIsAGrammarRule();
-        parsingTable.putAll(tempTableEmptyRules);
-        removeEmptyTerminalEntries();
+        //replaceEmptyTerminalWhenThereIsAGrammarRule();
+        //putAllTempEntries(tempTableEmptyRules);
+        //removeEmptyTerminalEntries();
 
-        System.out.println("Temporary Parsing Table");
-        for(Map.Entry<MapKey, String> tempEntry : TemporaryParsingTableOfEmptyRules.temporaryParsingTable.entrySet()){
+        /*System.out.println("Temporary Parsing Table");
+        for(Map.Entry<MapKey, String> tempEntry : temporaryParsingTable.entrySet()){
             System.out.print("Non Terminal: " + tempEntry.getKey().getNonTerminal());
             System.out.print(" Terminal: " + tempEntry.getKey().getTerminal());
             System.out.println(" Value: " + tempEntry.getValue());
@@ -70,10 +70,53 @@ public class ParsingTable {
             System.out.print("Non Terminal: " + tempEntry.getKey().getNonTerminal());
             System.out.print(" Terminal: " + tempEntry.getKey().getTerminal());
             System.out.println(" Value: " + tempEntry.getValue());
-        }
+        }*/
 
-        TemporaryParsingTableOfEmptyRules.temporaryParsingTable.clear();
-        tempTableEmptyRules.clear();
+        //temporaryParsingTable.clear();
+        //tempTableEmptyRules.clear();
+
+        creatingMissingParsingRules();
+    }
+        /**
+        * loop in array of nonterminal
+        -> method loooking for this first
+        ->push temporary table inside hasmap
+        ->clear temporary table
+        end l
+        *
+        * */
+    private void creatingMissingParsingRules(){
+        for(String nonTerminal : nonTerminalsList){
+            createParsingRule(nonTerminal);
+            putAllTempEntries(temporaryParsingTable);
+            temporaryParsingTable.clear();
+        }
+    }
+
+        /**
+         method
+         -> check if first elements in rules is a non terminal or not
+         ->passing throught the parsing table to find the first of the non terminal passed
+         -> register in temporary table if new entries
+         **/
+    private void createParsingRule(String nonTerminal){
+        for(Map.Entry<MapKey, String> parsingTableEntrySet: parsingTable.entrySet()){
+            if(parsingTableEntrySet.getKey().getNonTerminal().equals(nonTerminal)){
+                addRuleInTemporaryTable(nonTerminal, parsingTableEntrySet.getValue());
+            }
+        }
+    }
+
+    private void addRuleInTemporaryTable(String initialNonTerminal, String grammarRule){
+        Scanner grammarScanner = new Scanner(grammarRule);
+        if(grammarScanner.hasNext()){
+            String token = grammarScanner.next();
+            for(Map.Entry<MapKey, String> tempEntry : parsingTable.entrySet()){
+                if(tempEntry.getKey().getNonTerminal().equals(token)){
+                    temporaryParsingTable.put(new MapKey(tempEntry.getKey().getTerminal(), initialNonTerminal), grammarRule);
+                }
+            }
+        }
     }
 
     private void replaceEmptyTerminalWhenThereIsAGrammarRule() {
@@ -91,7 +134,7 @@ public class ParsingTable {
         Scanner grammarScanner = new Scanner(grammarRule);
         if(grammarScanner.hasNext()){
             String token = grammarScanner.next();
-            for(Map.Entry<MapKey, String> tempEntry : TemporaryParsingTableOfEmptyRules.temporaryParsingTable.entrySet()){
+            for(Map.Entry<MapKey, String> tempEntry : temporaryParsingTable.entrySet()){
                 if(tempEntry.getKey().getNonTerminal().equals(token)){
                     tempTableEmptyRules.put(new MapKey(tempEntry.getKey().getTerminal(), initialNonTerminal),grammarRule);
                 }
@@ -139,7 +182,6 @@ public class ParsingTable {
                     System.out.println(grammarEntry.getKey().getNonTerminal());*/
                     //needed for <declaration> <declarations> which could be infinite
                     if (!upperLevelNonTerminal.equals(grammarEntry.getKey().getNonTerminal()) ) {
-                        System.out.println("ELSEEEEEE");
                         replaceEmptyTerminalEntry(initialNonTerminal, grammarEntry.getKey().getNonTerminal());
                     }
                 } else {
@@ -165,7 +207,7 @@ public class ParsingTable {
 
                         if (isScannerAfterUpperLevelNonTerminal && !isUpperLevelNonTerminal) {
                             if (!FirstAndFollow.isTokenANonTerminal(nextToken)) {
-                                TemporaryParsingTableOfEmptyRules.temporaryParsingTable.put(new MapKey(nextToken, initialNonTerminal), "");
+                                temporaryParsingTable.put(new MapKey(nextToken, initialNonTerminal), "");
                                 isNonTerminalEmpty = false;
                             } else {
                                 //If the next token is a nonTerminal
@@ -179,7 +221,7 @@ public class ParsingTable {
                                             if (firstEntry.getKey().equals("\"\"")) {
                                                 isAnyOfTheFirstRulesEmpty = true;
                                             }else {
-                                                TemporaryParsingTableOfEmptyRules.temporaryParsingTable.put(new MapKey(firstEntry.getKey(), initialNonTerminal), "");
+                                                temporaryParsingTable.put(new MapKey(firstEntry.getKey(), initialNonTerminal), "");
                                             }
                                         }
                                         isNonTerminalEmpty = isAnyOfTheFirstRulesEmpty;
@@ -264,6 +306,18 @@ public class ParsingTable {
             }
         }
         return null;
+    }
+
+    private void putAllTempEntries(Map<MapKey, String> tableToCopy){
+        for(Map.Entry<MapKey, String> tempEntry : tableToCopy.entrySet()){
+            if(!parsingTable.containsKey(tempEntry.getKey())){
+                parsingTable.put(tempEntry.getKey(), tempEntry.getValue());
+            }else{
+                if(parsingTable.get(tempEntry.getKey()).equals("")){
+                    parsingTable.put(tempEntry.getKey(), tempEntry.getValue());
+                }
+            }
+        }
     }
 
     @Override

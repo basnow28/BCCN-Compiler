@@ -1,7 +1,6 @@
 ﻿program factorial ;
 start
 {
-       int n = 5 ;
-
-       $n = 5 + 3 * 6 - 3;
+       int n = 8 ;
+       $n = 5 ;
 } end
