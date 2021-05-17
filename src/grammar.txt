@@ -17,8 +17,8 @@
 <calculation> := + <term> <calculation>
 <calculation> := - <term> <calculation>
 <calculatio> := <leftterm> <calculation>
-<calculations> := ""
 <calculations> := <calculatio> <calculations>
+<calculations> := ""
 <calculationsss> := <term> <calculations>
 <assignment> := identifier = <calculationsss> ;
 <condition> := NOTEQUALS <term>

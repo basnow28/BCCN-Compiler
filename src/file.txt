@@ -2,5 +2,12 @@
 start
 {
        int n = 8 ;
-       $n = 5 ;
+       int m = 8 ;
+       if [ n > 6 ] {
+        while [ n < 6 ] {
+            $n = 5 * 3 - 2 * 6 ;
+            $m = 1 - $n ;
+        }
+       }
+
 } end

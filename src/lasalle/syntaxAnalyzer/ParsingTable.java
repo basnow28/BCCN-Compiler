@@ -50,13 +50,14 @@ public class ParsingTable {
         }
 
         replaceEmptyTerminalWithANonEmpty();
-        //removeEmptyTerminalAndGrammarEntries();
 
-        //putAllTempEntries(temporaryParsingTable);
+        removeEmptyTerminalAndGrammarEntries();
 
-        //replaceEmptyTerminalWhenThereIsAGrammarRule();
-        //putAllTempEntries(tempTableEmptyRules);
-        //removeEmptyTerminalEntries();
+        putAllTempEntries(temporaryParsingTable);
+
+        replaceEmptyTerminalWhenThereIsAGrammarRule();
+        putAllTempEntries(tempTableEmptyRules);
+        removeEmptyTerminalEntries();
 
         /*System.out.println("Temporary Parsing Table");
         for(Map.Entry<MapKey, String> tempEntry : temporaryParsingTable.entrySet()){
@@ -72,8 +73,10 @@ public class ParsingTable {
             System.out.println(" Value: " + tempEntry.getValue());
         }*/
 
-        //temporaryParsingTable.clear();
-        //tempTableEmptyRules.clear();
+        temporaryParsingTable.clear();
+        tempTableEmptyRules.clear();
+
+        System.out.println(parsingTable);
 
         creatingMissingParsingRules();
     }
@@ -87,7 +90,14 @@ public class ParsingTable {
         * */
     private void creatingMissingParsingRules(){
         for(String nonTerminal : nonTerminalsList){
+
             createParsingRule(nonTerminal);
+            /*for(Map.Entry<MapKey, String> tempEntry : temporaryParsingTable.entrySet()){
+                System.out.print("Non Terminal: " + tempEntry.getKey().getNonTerminal());
+                System.out.print(" Terminal: " + tempEntry.getKey().getTerminal());
+                System.out.println(" Value: " + tempEntry.getValue());
+            }*/
+            System.out.println(temporaryParsingTable);
             putAllTempEntries(temporaryParsingTable);
             temporaryParsingTable.clear();
         }
@@ -313,7 +323,7 @@ public class ParsingTable {
             if(!parsingTable.containsKey(tempEntry.getKey())){
                 parsingTable.put(tempEntry.getKey(), tempEntry.getValue());
             }else{
-                if(parsingTable.get(tempEntry.getKey()).equals("")){
+                if(parsingTable.get(tempEntry.getKey()).equals("\"\"")){
                     parsingTable.put(tempEntry.getKey(), tempEntry.getValue());
                 }
             }

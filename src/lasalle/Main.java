@@ -47,7 +47,7 @@ public class Main {
                 System.out.println(" Value: " + tempEntry.getValue());
             }
 
-            //syntaxAnalyzer.validateCode(lexicalArray, parsingTable);
+            syntaxAnalyzer.validateCode(lexicalArray, parsingTable);
 
             /*System.out.println(IdentifierTable.getValues());
             System.out.println(IntegerTable.getValues());
