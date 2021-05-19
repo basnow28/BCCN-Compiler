@@ -18,8 +18,6 @@ public class ParsingTree {
                 //Populating Parsing Tree
                 //adding the following tags to the stack of the nextNode to be read
                 String token = stringTokenizer.nextToken();
-                System.out.print("Children:  ");
-                System.out.print(token);
                 node.addChild(token, (ParsingTreeNodeIterator<String>) parsingTreeNodeIterator);
             }
         }
