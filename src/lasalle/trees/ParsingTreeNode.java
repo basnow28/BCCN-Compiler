@@ -15,11 +15,10 @@ public class ParsingTreeNode<T> implements Iterable<ParsingTreeNode<T>> {
         this.childrenIterator = this.children.iterator();
     }
 
-    public ParsingTreeNode<T> addChild(T treeChild, ParsingTreeNodeIterator<T> iterator ){
+    public ParsingTreeNode<T> addChild(T treeChild ){
         ParsingTreeNode<T> childParsingTreeNode = new ParsingTreeNode<>(treeChild);
         childParsingTreeNode.parent = this;
         this.children.add(childParsingTreeNode);
-        iterator.updateChildrenIterator(this);
         this.childrenIterator = this.children.iterator();
         return childParsingTreeNode;
     }
@@ -55,4 +54,8 @@ public class ParsingTreeNode<T> implements Iterable<ParsingTreeNode<T>> {
         return iterator;
     }
 
+    public ParsingTreeNodePopulateIterator<T> getPopulateIterator() {
+        ParsingTreeNodePopulateIterator<T> iterator = new ParsingTreeNodePopulateIterator<>(this);
+        return iterator;
+    }
 }

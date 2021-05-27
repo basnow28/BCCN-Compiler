@@ -14,7 +14,7 @@ public class ParsingTreeNodeIterator<T> implements Iterator<ParsingTreeNode<T>> 
     private ProcessStages nextProcessStage;
     private ParsingTreeNode<T> nextTreeNode;
 
-    private static Stack<ParsingTreeNode<String>> nodeStack = new Stack<>();
+    private Stack<ParsingTreeNode<T>> nodeStack = new Stack<>();
 
     //Iterators for the children to implement hasNext function
     private Iterator<ParsingTreeNode<T>> childrenCurrentNodeIterator;
@@ -39,21 +39,22 @@ public class ParsingTreeNodeIterator<T> implements Iterator<ParsingTreeNode<T>> 
         //Implement hasNext() for the tree method
         //Check if the nextProcessStage is the parent
         //If so, it means there is a next node which is a parent
-        if(this.nextProcessStage == ProcessStages.ProcessParent){
+        if (this.nextProcessStage == ProcessStages.ProcessParent) {
             this.nextProcessStage = ProcessStages.ProcessChildCurrentNode;
             this.nextTreeNode = this.parsingTreeNode;
             return true;
         }
 
-        if(this.nextProcessStage == ProcessStages.ProcessChildCurrentNode) {
+        if (this.nextProcessStage == ProcessStages.ProcessChildCurrentNode) {
             if (childrenCurrentNodeIterator.hasNext()) {
                 ParsingTreeNode<T> childDirect = childrenCurrentNodeIterator.next();
 
                 //Check if the childDirect has a sibling
                 //Move on to the children of the childDirect
                 //If the sibling exists, add it to the stack
-                if(childrenCurrentNodeIterator.hasNext()){
-                    nodeStack.add((ParsingTreeNode<String>) childrenCurrentNodeIterator.next());
+                if (childrenCurrentNodeIterator.hasNext()) {
+                    nodeStack.add(childrenCurrentNodeIterator.next());
+                    System.out.println("Node stack children: " + nodeStack);
                 }
 
                 // Move on to the children of the childDirect
@@ -68,23 +69,41 @@ public class ParsingTreeNodeIterator<T> implements Iterator<ParsingTreeNode<T>> 
                 if (!nodeStack.isEmpty()) {
                     //The next tree node should be the sibling of the node from the stack
                     //which is the next child of it's parent node
-                    ParsingTreeNode<T> stackNode = (ParsingTreeNode<T>) nodeStack.pop();
+                    ParsingTreeNode<T> stackNode = nodeStack.pop();
                     this.nextTreeNode = stackNode;
+                    this.childrenCurrentNodeIterator = nextTreeNode.childrenIterator;
                     this.nextProcessStage = ProcessStages.ProcessChildCurrentNode;
                     return true;
                 } else {
-                    if(this.nextTreeNode.parent.childrenIterator.hasNext()){
-                        this.nextTreeNode = this.nextTreeNode.parent.childrenIterator.next();
+                    this.nextTreeNode = findFollowingNode(this.nextTreeNode);
+                    if (this.nextTreeNode != null) {
                         this.nextProcessStage = ProcessStages.ProcessChildCurrentNode;
                         this.childrenCurrentNodeIterator = this.nextTreeNode.childrenIterator;
                         return true;
                     }
+                    this.nextTreeNode = null;
                     this.nextProcessStage = null;
                     return false;
                 }
             }
         }
         return false;
+    }
+
+    private ParsingTreeNode<T> findFollowingNode(ParsingTreeNode<T> node){
+        if(node.data.equals("<program>")){
+            return null;
+        }
+
+        Iterator<ParsingTreeNode<T>> childIter = node.parent.children.iterator();
+        while(childIter.hasNext()){
+            if(childIter.next().data.equals(node.data)){
+                if(childIter.hasNext()){
+                    return childIter.next();
+                }
+            }
+        }
+        return findFollowingNode(node.parent);
     }
 
     @Override
