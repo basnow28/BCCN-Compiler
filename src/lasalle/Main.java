@@ -1,5 +1,6 @@
 package lasalle;
 
+import lasalle.MPIS.InstructionFactory;
 import lasalle.lexicalAnalyser.LexicalAnalyser;
 import lasalle.lexicalAnalyser.LexicalArray;
 import lasalle.reader.CodeReader;
@@ -61,8 +62,39 @@ public class Main {
             while(iterator.hasNext()){
                 System.out.println(iterator.next());
             }*/
+            ArrayList<String> a1 = new ArrayList<String>();
+            a1.add("a");
+            a1.add("=:");
+            a1.add("1");
+            ArrayList<String> a2 = new ArrayList<String>();
+            a2.add("b");
+            a2.add("=:");
+            a2.add("a");
+            ArrayList<String> a3 = new ArrayList<String>();
+            a3.add("L1: ");
+            a3.add("if");
+            a3.add("a");
+            a3.add("=");
+            a3.add("3");
+            a3.add("goto");
+            a3.add("label");
+            ArrayList<String> a4 = new ArrayList<String>();
+            a4.add("goto");
+            a4.add("label");
+
+
+
 
             TacResultsArray tagResultsArray = new TacResultsArray();
+            tagResultsArray.add(a1);
+            tagResultsArray.add(a2);
+            tagResultsArray.add(a3);
+
+
+
+            InstructionFactory instructionFactory = new InstructionFactory();
+            instructionFactory.setTacResultsArray(tagResultsArray);
+            instructionFactory.createMIPSInstructions();
 
         }
         catch (IOException e){
