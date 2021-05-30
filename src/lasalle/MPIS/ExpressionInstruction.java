@@ -46,7 +46,9 @@ public class ExpressionInstruction implements Instruction{
     public void createAdd(ArrayList<String> tac, HashMap<String, String> s_reg){
         if(isNumber(tac.get(2)) && isNumber(tac.get(4))) {
             String s = s_reg.get(tac.get(0));
-            mips.add("addi " + s + ", " + tac.get(2) + ", " + tac.get(4));
+            mips.add("li $t0, " + tac.get(2));
+            mips.add("li $t1, " + tac.get(4));
+            mips.add("addu " + s + ", $t0, $t1");
         }
         else if(s_reg.containsKey(tac.get(2)) &&  s_reg.containsKey(tac.get(4))){
             String s = s_reg.get(tac.get(0));
@@ -54,13 +56,15 @@ public class ExpressionInstruction implements Instruction{
         }
         else if(!s_reg.containsKey(tac.get(2)) &&  s_reg.containsKey(tac.get(4))){
             String s = s_reg.get(tac.get(0));
-            mips.add("add " + s + ", " + s_reg.get(tac.get(4)));
-            mips.add("addi " + s + ", " + tac.get(2));
+            mips.add("li $t0, " + tac.get(2));
+            //mips.add("add " + s + ", " + s_reg.get(tac.get(4)) + ", $0");
+            mips.add("addu " + s + ", $t0, " + s_reg.get(tac.get(4)));
         }
         else if(s_reg.containsKey(tac.get(2)) &&  !s_reg.containsKey(tac.get(4))){
             String s = s_reg.get(tac.get(0));
-            mips.add("add " + s + ", " + s_reg.get(tac.get(2)));
-            mips.add("addi " + s + ", " + tac.get(4));
+            mips.add("li $t0, " + tac.get(4));
+            //mips.add("add " + s + ", " + s_reg.get(tac.get(2)) + ", $0");
+            mips.add("addu " + s + ", $t0, " +  s_reg.get(tac.get(2)));
         }
 
     }
@@ -109,7 +113,7 @@ public class ExpressionInstruction implements Instruction{
         else if(s_reg.containsKey(tac.get(2)) &&  !s_reg.containsKey(tac.get(4))){
             String s = s_reg.get(tac.get(0));
             mips.add("li $t0" + ","  + tac.get(4));
-            mips.add("div " + s  + s_reg.get(tac.get(2)) + ", $t0");
+            mips.add("div " + s  + ", $t0, " + s_reg.get(tac.get(2)));
         }
 
     }
@@ -132,7 +136,7 @@ public class ExpressionInstruction implements Instruction{
         }
         else if(s_reg.containsKey(tac.get(2)) &&  !s_reg.containsKey(tac.get(4))){
             String s = s_reg.get(tac.get(0));
-            mips.add("li $t0" + ","  + tac.get(4));
+            mips.add("li $t0, "  + tac.get(4));
             mips.add("mul " + s + ", $t0, " + s_reg.get(tac.get(2)));
         }
 

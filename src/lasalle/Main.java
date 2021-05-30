@@ -63,25 +63,51 @@ public class Main {
                 System.out.println(iterator.next());
             }*/
             ArrayList<String> a1 = new ArrayList<String>();
-            a1.add("a");
-            a1.add("=:");
+            a1.add("i");
+            a1.add("=");
             a1.add("1");
             ArrayList<String> a2 = new ArrayList<String>();
-            a2.add("b");
-            a2.add("=:");
             a2.add("a");
+            a2.add("=");
+            a2.add("2");
             ArrayList<String> a3 = new ArrayList<String>();
+            //a3.add("a");
+            //a3.add("=:");
+            //a3.add("3");
+            //a3.add("+");
+            //a3.add("b");
+
             a3.add("L1: ");
             a3.add("if");
-            a3.add("a");
-            a3.add("=");
-            a3.add("3");
+            a3.add("i");
+            a3.add(">");
+            a3.add("5");
             a3.add("goto");
-            a3.add("label");
-            ArrayList<String> a4 = new ArrayList<String>();
-            a4.add("goto");
-            a4.add("label");
+            a3.add("L2");
 
+            ArrayList<String> a4 = new ArrayList<String>();
+            a4.add("a");
+            a4.add("=:");
+            a4.add("a");
+            a4.add("/");
+            a4.add("2");
+
+            ArrayList<String> a5 = new ArrayList<String>();
+            a5.add("i");
+            a5.add("=:");
+            a5.add("i");
+            a5.add("+");
+            a5.add("1");
+
+            ArrayList<String> a6 = new ArrayList<String>();
+            a6.add("goto");
+            a6.add("L1");
+
+            ArrayList<String> a7 = new ArrayList<String>();
+            a7.add("L2:");
+            a7.add("x");
+            a7.add("=");
+            a7.add("a");
 
 
 
@@ -89,6 +115,10 @@ public class Main {
             tagResultsArray.add(a1);
             tagResultsArray.add(a2);
             tagResultsArray.add(a3);
+            tagResultsArray.add(a4);
+            tagResultsArray.add(a5);
+            tagResultsArray.add(a6);
+            tagResultsArray.add(a7);
 
 
 

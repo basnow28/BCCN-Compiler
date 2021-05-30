@@ -49,14 +49,14 @@ public class ConditionalJumpInstruction implements Instruction{
     @Override
     public ArrayList<String> createAssemblyInstruction(ArrayList<String> tac, HashMap<String, String> s_reg) {
         if(s_reg.containsKey(tac.get(3))){
-            String s = "lw $t0, " + s_reg.get(tac.get(1));
-            String s1 = "lw $t1, " + s_reg.get(tac.get(3));
+            String s = "move $t0, " + s_reg.get(tac.get(1));
+            String s1 = "move $t1, " + s_reg.get(tac.get(3));
             mips.add(s);
             mips.add(s1);
 
         }
         else{
-            String s = "lw $t0, " + s_reg.get(tac.get(1));
+            String s = "move $t0, " + s_reg.get(tac.get(1));
             String s1 = "li $t1, " + tac.get(3);
             mips.add(s);
             mips.add(s1);

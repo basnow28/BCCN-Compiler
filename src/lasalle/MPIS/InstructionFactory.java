@@ -2,6 +2,8 @@ package lasalle.MPIS;
 
 import lasalle.tac.TacResultsArray;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -63,7 +65,7 @@ public class InstructionFactory {
 
     }
 
-    public void createMIPSInstructions(){
+    public void createMIPSInstructions() throws IOException {
         configMIPS();
 
 
@@ -99,10 +101,13 @@ public class InstructionFactory {
 
     }
 
-    private void printAllMIPS() {
+    private void printAllMIPS() throws IOException {
+        FileWriter fileWriter = new FileWriter("mips.txt");
         for(int i = 0;  i< mips.size(); i++){
-            System.out.println(mips.get(i));
+            fileWriter.write(mips.get(i));
+            fileWriter.write("\n");
         }
+        fileWriter.close();
     }
 
     public Instruction getInstructionType(String type){

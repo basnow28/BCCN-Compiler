@@ -74,16 +74,15 @@ public class AssignmentInstruction implements Instruction {
         //a = n
         if (variableExist(tac.get(0), s_reg)) {
             String s = s_reg.get(tac.get(0));
-            mips.add("lw " + s + ", " + tac.get(2));
+            mips.add("move " + s + ", " + tac.get(2));
         }
         //if doesnt exist we put a new value in the hashmap
         else {
             String key = tac.get(2);
             String hash_value = "$s" + s_reg.size();
-            mips.add("lw " + hash_value + ", " + s_reg.get(tac.get(2)));
+            mips.add("move " + hash_value + ", " + s_reg.get(tac.get(2)));
             s_reg.put(tac.get(0), hash_value);
             s_reg.put(tac.get(2), s_reg.get(key));
-            //mips.add("move " + tac.get(0) + ", " + hash_value);
 
         }
     }
