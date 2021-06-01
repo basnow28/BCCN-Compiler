@@ -4,15 +4,17 @@ import lasalle.trees.ParsingTree;
 import lasalle.trees.ParsingTreeNode;
 import lasalle.trees.ParsingTreeNodeIterator;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class SmallTrees {
     Map<String, ParsingTreeNode<String>> smallTreesMap;
-    String keywords[] = {"<ifs>", "<while>", "<assignment>", "<declaration>"};
-    Stack<ParsingTreeNode<String>> stack;
+    List<String> keywords = Arrays.asList(
+            "<ifs>",
+            "<while>",
+            "<assignment>",
+            "<declaration>"
+    );
+    Stack<ParsingTreeNodeIterator<String>> stack;
     int labelNumber = 1;
 
     public SmallTrees(){
@@ -45,36 +47,76 @@ public class SmallTrees {
             if(stackNodeIterator != null){
                 if(stackNodeIterator.hasNext()) {
                     stackNode = stackNodeIterator.next();
+                }else{
+                    //If there is no more children in the small tree iterator,
+                    // pop the node from the stack and update the iterator
+                    if(!stack.isEmpty()){
+                        stack.pop();
+                        if(!stack.isEmpty()){
+                            //If the stack is not empty, get the first iterator that has more children
+                            stackNodeIterator = stack.peek();
+                            while(!stackNodeIterator.hasNext()){
+                                stack.pop();
+                                if(!stack.isEmpty()) {
+                                    stackNodeIterator = stack.peek();
+                                }else{
+                                    stackNode = null;
+                                    stackNodeIterator = null;
+                                    break;
+                                }
+                            }
+                            if(stackNodeIterator != null){
+                                stackNode = stackNodeIterator.next();
+                            }
+                        } else {
+                            stackNode = null;
+                            stackNodeIterator = null;
+                        }
+                    }
                 }
             }else{
                 stackNode = null;
+                stackNodeIterator = null;
             }
 
             //Add nodes to the small Tree if it is not a keyword
-            if (node.data.equals(keywords[0]) || node.data.equals(keywords[1]) || node.data.equals(keywords[2]) || node.data.equals(keywords[3])) {
+            if (isTokenAKeyword(node.data)) {
                 if (!node.children.isEmpty()) {
                     ParsingTreeNode<String> newSmallTree = new ParsingTreeNode<>(node.data);
                     //For each child of the node, add them to the newSmallTree
                     Iterator<ParsingTreeNode<String>> childIter = node.children.iterator();
                     while(childIter.hasNext()){
-                        newSmallTree.addChild(childIter.next().data);
+                        newSmallTree.addChild(childIter.next());
                     }
                     //Add the node to small tree map with a label
                     String label = "L"+labelNumber;
                     smallTreesMap.put(label, newSmallTree);
                     //Push the small tree to the stack
-                    stack.add(newSmallTree);
-                    //Update the iterator of the current stack iterator
-                    stackNodeIterator = newSmallTree.childrenIterator;
-
                     //Check if there is a parent tree
                     if(stackNode != null){
                         stackNode.updateValue(label);
+                        if(!stackNode.children.isEmpty()){
+                            ((ParsingTreeNodeIterator<String>) stackNodeIterator).removeChildrenFromStack(stackNode.children);
+                            stackNode.children.clear();
+                        }
                     }
+                    stack.add((ParsingTreeNodeIterator<String>) newSmallTree.iterator());
+                    //Update the iterator of the current stack iterator
+                    stackNodeIterator = stack.peek();
+                    //Move the iterator so the next one is not a parent
+                    if(stackNodeIterator.hasNext()){
+                        stackNodeIterator.next();
+                    }
+
+
                     labelNumber++;
                 }
             }
         }
+    }
+
+    private boolean isTokenAKeyword(String token){
+        return keywords.contains(token);
     }
 
     /*private void createSmallTreesRecursively(ParsingTreeNodeIterator<String> parsingTreeNodeIterator, ParsingTreeNode<String> smallTree) {

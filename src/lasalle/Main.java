@@ -66,7 +66,7 @@ public class Main {
             TacResultsArray tagResultsArray = new TacResultsArray();
             SmallTrees smallTrees = new SmallTrees();
             smallTrees.createSmallTrees();
-
+            System.out.println("hello");
         }
         catch (IOException e){
             System.out.print(e.getMessage());

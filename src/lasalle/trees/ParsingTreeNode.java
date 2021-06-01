@@ -23,6 +23,13 @@ public class ParsingTreeNode<T> implements Iterable<ParsingTreeNode<T>> {
         return childParsingTreeNode;
     }
 
+    public ParsingTreeNode<T> addChild(ParsingTreeNode<T> childParsingTreeNode ){
+        childParsingTreeNode.parent = this;
+        this.children.add(childParsingTreeNode);
+        this.childrenIterator = this.children.iterator();
+        return childParsingTreeNode;
+    }
+
     public boolean isRoot(){
         return parent == null;
     }

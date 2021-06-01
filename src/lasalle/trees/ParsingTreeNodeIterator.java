@@ -3,6 +3,7 @@ package lasalle.trees;
 import lasalle.syntaxAnalyzer.FirstAndFollow;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Stack;
 
 public class ParsingTreeNodeIterator<T> implements Iterator<ParsingTreeNode<T>> {
@@ -33,6 +34,12 @@ public class ParsingTreeNodeIterator<T> implements Iterator<ParsingTreeNode<T>> 
             nodeStack.push(tempStack.pop());
         }
         tempStack.empty();
+    }
+
+    public void removeChildrenFromStack(List<ParsingTreeNode<T>> children){
+        for(ParsingTreeNode<T> child: children){
+            nodeStack.pop();
+        }
     }
 
     @Override
