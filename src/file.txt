@@ -1,13 +1,15 @@
-﻿program factorial ;
+﻿program fibonnaci ;
 start
-{
-       int n = 8 ;
-       int m = 8 ;
-       if [ n > 6 ] {
-        while [ n < 6 ] {
-            $n = 5 * 3 - 2 * 6 ;
-            $m = 1 - $n ;
-        }
-       }
+{      int n = 0 ;
+       int n2 = 1 ;
+       int loop = 5 ;
+       int sum = 0 ;
+       int i = 0 ;
 
+       while [ $i < $loop ] {
+       	$sum = $n + $n2 ;
+       	$n = $n2 ;
+       	$n2 = $sum ;
+       	$i = $i + 1 ;
+       }
 } end

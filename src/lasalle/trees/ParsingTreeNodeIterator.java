@@ -8,6 +8,7 @@ import java.util.Stack;
 public class ParsingTreeNodeIterator<T> implements Iterator<ParsingTreeNode<T>> {
     private Stack<ParsingTreeNode<T>> nodeStack;
     private ParsingTreeNode<T> nextTreeNode;
+    private ParsingTreeNode<T> prevTreeNode;
 
     public ParsingTreeNodeIterator(ParsingTreeNode<T> parentNode){
         this.nodeStack = new Stack<>();
@@ -39,6 +40,7 @@ public class ParsingTreeNodeIterator<T> implements Iterator<ParsingTreeNode<T>> 
         boolean hasNext = false;
         if( !nodeStack.empty()){
             hasNext = true;
+            prevTreeNode = nextTreeNode;
             nextTreeNode = nodeStack.pop();
             if(!nextTreeNode.children.isEmpty()){
                 this.addChildrenToStack(this.nextTreeNode);
@@ -52,5 +54,9 @@ public class ParsingTreeNodeIterator<T> implements Iterator<ParsingTreeNode<T>> 
     @Override
     public ParsingTreeNode<T> next() {
         return nextTreeNode;
+    }
+
+    public void goBack(){
+        nodeStack.push(prevTreeNode);
     }
 }

@@ -1,0 +1,14 @@
+program fibonnaci ;
+start
+{      int n = 0 ;
+       int n2 = 1 ;
+       int loop = 5 ;
+       int sum = 0 ;
+
+       while [ i < loop ] {
+       	sum = n + n2 ;
+       	n = n2 ;
+       	n2 = sum ;
+       	i = i + 1 ;
+       }
+} end

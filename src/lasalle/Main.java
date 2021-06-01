@@ -8,6 +8,7 @@ import lasalle.syntaxAnalyzer.MapKey;
 import lasalle.syntaxAnalyzer.ParsingTable;
 import lasalle.syntaxAnalyzer.SyntaxAnalyzer;
 import lasalle.tables.*;
+import lasalle.tac.SmallTrees;
 import lasalle.tac.TacResultsArray;
 import lasalle.trees.ParsingTree;
 import lasalle.trees.ParsingTreeNode;
@@ -63,6 +64,8 @@ public class Main {
             }*/
 
             TacResultsArray tagResultsArray = new TacResultsArray();
+            SmallTrees smallTrees = new SmallTrees();
+            smallTrees.createSmallTrees();
 
         }
         catch (IOException e){
