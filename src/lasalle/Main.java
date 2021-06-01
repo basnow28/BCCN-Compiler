@@ -7,12 +7,10 @@ import lasalle.syntaxAnalyzer.FirstAndFollow;
 import lasalle.syntaxAnalyzer.MapKey;
 import lasalle.syntaxAnalyzer.ParsingTable;
 import lasalle.syntaxAnalyzer.SyntaxAnalyzer;
-import lasalle.tables.*;
 import lasalle.tac.SmallTrees;
-import lasalle.tac.TacResultsArray;
+import lasalle.tac.TacResults;
 import lasalle.trees.ParsingTree;
 import lasalle.trees.ParsingTreeNode;
-import lasalle.trees.ParsingTreeNodeIterator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,10 +61,12 @@ public class Main {
                 System.out.println(iterator.next());
             }*/
 
-            TacResultsArray tagResultsArray = new TacResultsArray();
+            TacResults tacResults = new TacResults();
             SmallTrees smallTrees = new SmallTrees();
             smallTrees.createSmallTrees();
             System.out.println("hello");
+
+            tacResults.populateTacArray(smallTrees.getSmallTreesMap());
         }
         catch (IOException e){
             System.out.print(e.getMessage());

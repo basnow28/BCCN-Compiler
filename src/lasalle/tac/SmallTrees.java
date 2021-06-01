@@ -7,14 +7,15 @@ import lasalle.trees.ParsingTreeNodeIterator;
 import java.util.*;
 
 public class SmallTrees {
-    Map<String, ParsingTreeNode<String>> smallTreesMap;
-    List<String> keywords = Arrays.asList(
+    private Map<String, ParsingTreeNode<String>> smallTreesMap;
+    private List<String> keywords = Arrays.asList(
             "<ifs>",
             "<while>",
             "<assignment>",
-            "<declaration>"
+            "<declaration>",
+            "<main>"
     );
-    Stack<ParsingTreeNodeIterator<String>> stack;
+    private Stack<ParsingTreeNodeIterator<String>> stack;
     int labelNumber = 1;
 
     public SmallTrees(){
@@ -119,48 +120,7 @@ public class SmallTrees {
         return keywords.contains(token);
     }
 
-    /*private void createSmallTreesRecursively(ParsingTreeNodeIterator<String> parsingTreeNodeIterator, ParsingTreeNode<String> smallTree) {
-        while(parsingTreeNodeIterator.hasNext()){
-            ParsingTreeNode<String> node = parsingTreeNodeIterator.next();
-
-            //Add nodes to the small Tree if it is not a keyword
-            if(node.data.equals(keywords[0]) || node.data.equals(keywords[1]) || node.data.equals(keywords[2])){
-                if(!node.children.isEmpty()) {
-                    ParsingTreeNode<String> newSmallTree = new ParsingTreeNode<>(node.data);
-                    ParsingTreeNode<String> sibling = findSiblingOfANode(node);
-                    stack.push(sibling);
-                    labelNumber++;
-                    createSmallTreesRecursively(parsingTreeNodeIterator, newSmallTree);
-                }
-            }else{
-                //Populate the smallTree until you find the next node which is on the top of the stack
-                //That is a sibling of the current smallTree
-                if(!stack.isEmpty()) {
-                    if (!node.data.equals(stack.peek().data)) {
-                        smallTree.addChild(node.data);
-                    } else {
-                        //Add the tree to the map
-                        smallTreesMap.put("L" + labelNumber, smallTree);
-                        stack.pop();
-                        //parsingTreeNodeIterator.goBack();
-                    }
-                }
-            }
-        }
+    public Map<String, ParsingTreeNode<String>> getSmallTreesMap() {
+        return smallTreesMap;
     }
-
-    private ParsingTreeNode<String> findSiblingOfANode(ParsingTreeNode<String> node){
-        //Get children iterator of a parent
-        if(!node.isRoot()){
-            Iterator<ParsingTreeNode<String>> parentIterator = node.parent.childrenIterator;
-            while(parentIterator.hasNext()){
-                if(parentIterator.next().data.equals(node.data)){
-                    if(parentIterator.hasNext()){
-                        return parentIterator.next();
-                    }
-                }
-            }
-        }
-        return null;
-    }*/
 }
