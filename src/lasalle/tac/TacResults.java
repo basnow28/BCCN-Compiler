@@ -11,6 +11,10 @@ public class TacResults {
     public Map<String, String> parentChildLabels = new LinkedHashMap<>();
     private HashSet<String> goTosLabels = new HashSet<>();
 
+    public ArrayList<ArrayList<String>> getTacArray() {
+        return tacArray;
+    }
+
     public TacResults(){
         tempTacLabArray.put("L-1", null);
     }

@@ -1,0 +1,17 @@
+.data
+
+.text
+
+li $s0, 1
+li $s1, 2
+L1: 
+move $t0, $s0
+li $t1, 5
+bgt $t0, $t1, L2
+li $t0,2
+div $s1, $t0, $s1
+li $t0, 1
+addu $s0, $t0, $s0
+j L1
+L2:
+move $s2, $s1
