@@ -72,9 +72,9 @@ public class AssignmentInstruction implements Instruction {
     public void createLu(ArrayList<String> tac, HashMap<String, String> s_reg) {
         //if a is a key in the map we find it and use it
         //a = n
-        if (variableExist(tac.get(0), s_reg)) {
+        if (s_reg.containsKey(tac.get(0))) {
             String s = s_reg.get(tac.get(0));
-            mips.add("move " + s + ", " + tac.get(2));
+            mips.add("move " + s + ", " + s_reg.get(tac.get(2)));
         }
         //if doesnt exist we put a new value in the hashmap
         else {

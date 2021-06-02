@@ -95,6 +95,7 @@ public class InstructionFactory {
                         break;
 
                 }
+                //instruction.createAssemblyInstruction(tacResultsArray.get(i), s_reg);
             mips.addAll(instruction.createAssemblyInstruction(tacResultsArray.get(i), s_reg));
         }
         printAllMIPS();
