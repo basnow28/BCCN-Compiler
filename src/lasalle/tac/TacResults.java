@@ -17,13 +17,13 @@ public class TacResults {
     }
 
     public TacResults(){
-        tempTacLabArray.put("L-1", null);
+        tempTacLabArray.put("L0", null);
     }
 
     public void populateTacArray(Map<String, ParsingTreeNode<String>> smallTrees){
         populateTempTacArray(smallTrees);
         addNewLinesToTac("L1");
-        tacArray.add(new ArrayList<String>(Arrays.asList("L-1:", "j", "=", "0")));
+        tacArray.add(new ArrayList<String>(Arrays.asList("L0:", "j", "=", "0")));
         System.out.println("added");
     }
 
