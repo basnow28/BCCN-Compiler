@@ -23,6 +23,7 @@ public class TacResults {
     public void populateTacArray(Map<String, ParsingTreeNode<String>> smallTrees){
         populateTempTacArray(smallTrees);
         addNewLinesToTac("L1");
+        tacArray.add(new ArrayList<String>(Arrays.asList("L-1:")));
         System.out.println("added");
     }
 
