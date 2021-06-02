@@ -1,6 +1,7 @@
 package lasalle.tac;
 
 import lasalle.syntaxAnalyzer.FirstAndFollow;
+import lasalle.tables.IntegerTable;
 import lasalle.trees.ParsingTreeNode;
 
 import java.util.*;
@@ -126,6 +127,9 @@ public class TacResults {
                     case "EQUALS":
                         tempTacLine.add("=");
                         break;
+                    case "while":
+                        tempTacLine.add("if");
+                        break;
                     case "{":
                         tempTacLine.add("goto");
                         //We know there is nothing after the while in our program
@@ -138,6 +142,10 @@ public class TacResults {
                         tempTacLine.add(goToValue);
                         break;
                     case "}":
+                        break;
+                    case "]":
+                        break;
+                    case "[":
                         break;
                     default:
                         if(node.data.matches("^L[0-9]+")){
@@ -181,7 +189,11 @@ public class TacResults {
         while(entryIter.hasNext()) {
             ParsingTreeNode<String> node = entryIter.next();
             if(node.children.isEmpty() && !FirstAndFollow.isTokenANonTerminal(node.data)){
-                tempTacLine.add(node.data);
+                if(node.data.startsWith("intValue")){
+                    tempTacLine.add(IntegerTable.getIntegers().get(node.data));
+                }else {
+                    tempTacLine.add(node.data);
+                }
             }
         }
         //Removing the semicolon ;
@@ -205,6 +217,8 @@ public class TacResults {
         //Remove the first and the last one
         tempTacLine.remove(0);
         tempTacLine.remove(tempTacLine.size()-1);
+        String intVal = tempTacLine.get(2);
+        tempTacLine.set(2, IntegerTable.getIntegers().get(intVal));
         this.tempTacLabArray.put(key, tempTacLine);
     }
 }

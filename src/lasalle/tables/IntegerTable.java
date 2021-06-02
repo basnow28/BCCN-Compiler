@@ -32,4 +32,8 @@ public class IntegerTable {
         integers.put(key, value);
         return key;
     }
+
+    public static Map<String, String> getIntegers() {
+        return integers;
+    }
 }
