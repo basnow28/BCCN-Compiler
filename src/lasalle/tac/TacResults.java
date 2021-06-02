@@ -17,7 +17,7 @@ public class TacResults {
     }
 
     public TacResults(){
-        tempTacLabArray.put("L0", null);
+        tempTacLabArray.put("L0", new ArrayList<>());
     }
 
     public void populateTacArray(Map<String, ParsingTreeNode<String>> smallTrees){
@@ -182,7 +182,7 @@ public class TacResults {
         if(!parent.equals("L1") && doIExist) {
             return findGoTo(parent);
         }
-        return "L-1";
+        return "L0";
     }
 
     private void addAssignmentToTacTemp(String key, Iterator<ParsingTreeNode<String>> entryIter) {
